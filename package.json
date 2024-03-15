@@ -49,6 +49,8 @@
 	"type": "module",
 	"dependencies": {
 		"@google/generative-ai": "^0.3.0",
-		"fastembed": "^1.14.1"
+		"fastembed": "^1.14.1",
+		"@supabase/supabase-js": "^2.39.8",
+		"svelte-persisted-store": "^0.9.1"
 	}
 }
