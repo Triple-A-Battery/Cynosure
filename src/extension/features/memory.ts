@@ -1,7 +1,4 @@
-import { cosineSimilarity, getEmbedding } from "$lib/embedding";
-import { get } from "$lib/storage";
-
-import { injectComponent } from "$lib/helper";
+import { getEmbedding } from "$lib/embedding";
 
 const memory = {
 	name: "memory",
@@ -22,13 +19,6 @@ const memory = {
 		}, 3000); // Changed to this onload
 
 		memory.db = (await chrome.storage.local.get(["memory"]))["memory"] || {};
-	},
-	popupID: "cynosure-memoryPopup",
-	popupHTML: (relevance: Number) => {
-		return `
-<p>The current content matches ${relevance}% with your task.</p>
-<p>You might want to get back on track!</p>
-		`;
 	}
 };
 
