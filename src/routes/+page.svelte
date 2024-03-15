@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { set, get } from '$lib/storage';
-	// import { getEmbedding } from '$lib/embedding';
+	import { getEmbedding } from '$lib/embedding';
 	import Extension from '$lib/components/Extension.svelte';
 
 	let task: string;
