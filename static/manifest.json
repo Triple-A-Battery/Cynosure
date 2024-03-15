@@ -10,13 +10,14 @@
 	"background": {
 		"service_worker": "service-worker.js"
 	},
+	"permissions": ["storage", "unlimitedStorage"],
 	"content_scripts": [
 		{
 			"//all_frames": true,
 			"js": ["content.js"],
 			"css": ["content.css"],
 			"//match_about_blank": true,
-			"matches": ["\u003Call_urls>"],
+			"matches": ["<all_urls>"],
 			"//run_at": "document_start"
 		}
 	]
