@@ -1,5 +1,6 @@
 import { req } from '$lib/helper';
-import { PUBLIC_URL } from '$lib/env';
+// import { PUBLIC_URL } from '$lib/env';
+import { PUBLIC_URL } from '$env';
 
 export async function getEmbedding(tasks) {
 	return await req(`${PUBLIC_URL}/api/embed`, {

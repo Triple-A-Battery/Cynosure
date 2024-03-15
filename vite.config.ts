@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import { PORT } from './src/lib/env';
+import { PORT } from './env';
 
 export default defineConfig({
 	plugins: [sveltekit()],

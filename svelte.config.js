@@ -36,7 +36,8 @@ const config = {
 			checkOrigin: false,
 		},
 		alias: {
-			'$extension': 'src/extension'
+			'$extension': 'src/extension',
+			'$env': 'env.ts'
 		}
 	}
 };
