@@ -1,9 +1,5 @@
-// import { injectComponent } from "$lib/helper";
-
 import { YoutubeTranscript } from 'youtube-transcript';
 import { summarize } from '$lib/gemini';
-import { req } from '$lib/network';
-import { PUBLIC_URL } from '$lib/env';
 
 function extractVideoId(url) {
 	var videoId = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@google/generative-ai':
+    specifier: ^0.3.0
+    version: 0.3.0
   fastembed:
     specifier: ^1.14.1
     version: 1.14.1
@@ -73,6 +76,9 @@ devDependencies:
   web-ext:
     specifier: ^7.11.0
     version: 7.11.0
+  youtube-transcript:
+    specifier: ^1.1.0
+    version: 1.1.0
 
 packages:
 
@@ -639,6 +645,11 @@ packages:
     resolution: {integrity: sha512-5D2qVpZrgpjtqU4eNOcWGp1gnUCgjfM+vKGE2y03kKN6z5EBhtx0qdRFbg8QuNNj8wXNoX93KJoYb+NqoxswmQ==}
     engines: {node: '>=14.0.0', npm: '>=7.0.0'}
     dev: true
+
+  /@google/generative-ai@0.3.0:
+    resolution: {integrity: sha512-6xbaA/JPpwCoe+lfxE2RavVB8JI8F3P6mCse1Sbm586HhJkyuSevK7Opt4l2dbQZFej+M8ALhMMpfBiRW05Fag==}
+    engines: {node: '>=18.0.0'}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -5785,6 +5796,11 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  /youtube-transcript@1.1.0:
+    resolution: {integrity: sha512-q/Sk5DShr9CE1qRGO0KkBPnm7KK/dk7LV/2hZEhRsSWjHYQtCrYR/9JkviY9jziTY6W4hXR4hTUcfhMKOMaMXA==}
+    engines: {node: '>=18.0.0'}
     dev: true
 
   /zip-dir@2.0.0:
