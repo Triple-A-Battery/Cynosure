@@ -10,6 +10,9 @@
 	"background": {
 		"service_worker": "service-worker.js"
 	},
+	"chrome_url_overrides": {
+		"newtab": "startpage.html"
+	},
 	"permissions": ["storage", "unlimitedStorage"],
 	"content_scripts": [
 		{
