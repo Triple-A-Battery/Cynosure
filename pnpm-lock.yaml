@@ -10,6 +10,9 @@ dependencies:
     version: 1.14.1
 
 devDependencies:
+  '@mozilla/readability':
+    specifier: ^0.5.0
+    version: 0.5.0
   '@sveltejs/adapter-node':
     specifier: ^5.0.1
     version: 5.0.1(@sveltejs/kit@2.5.4)
@@ -698,6 +701,11 @@ packages:
 
   /@mdn/browser-compat-data@5.5.7:
     resolution: {integrity: sha512-DoHTZ/TjtNfUu9eiqJd+x3IcCQrhS+yOYU436TKUnlE36jZwNbK535D1CmTsSYdi/UcdCWNm5KRQZ9g1tlZCPw==}
+    dev: true
+
+  /@mozilla/readability@0.5.0:
+    resolution: {integrity: sha512-Z+CZ3QaosfFaTqvhQsIktyGrjFjSC0Fa4EMph4mqKnWhmyoGICsV/8QK+8HpXut6zV7zwfWwqDmEjtk1Qf6EgQ==}
+    engines: {node: '>=14.0.0'}
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:
