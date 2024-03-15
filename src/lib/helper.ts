@@ -3,9 +3,16 @@ export async function req(url: string, options = {}) {
 }
 
 // Might not need this
-export function injectComponent(id, html) {
+export function injectComponent(id, html: string | HTMLElement) {
+
 	let popup = document.createElement('div');
 	popup.id = id;
-	popup.innerHTML = html;
+
+	if (typeof (html) == 'string') {
+		popup.innerHTML = html;
+	} else {
+		popup.appendChild(html);
+	}
+
 	document.body.appendChild(popup);
 }

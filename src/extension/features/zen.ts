@@ -1,4 +1,5 @@
 import { Readability } from '@mozilla/readability';
+import { injectComponent } from "$lib/helper";
 
 const zen = {
 	name: "zen",
@@ -6,39 +7,27 @@ const zen = {
 	feature: () => {
 		let article = new Readability(document).parse();
 		document.write(zen.getReaderHTML(article));
-		zen.popupHTMLNormal();
+		injectComponent(zen.popupID, zen.popupHTMLNormal());
 	},
 	enable: () => {
-		document.addEventListener("enableZen", () => {
-			zen.feature();
-		});
-		zen.popupHTML();
+		injectComponent(zen.popupID, zen.popupHTML());
 	},
 	popupID: "cynosure-zen",
 	popupHTML: () => {
-		let div = document.createElement("div");
-		div.id = zen.popupID;
 		let elem = document.createElement("button");
 		elem.innerText = "Zen";
 		elem.onclick = () => {
-			document.dispatchEvent(new CustomEvent('enableZen'));
+			zen.feature();
 		};
-		div.appendChild(elem);
-		document.body.appendChild(div);
+		return elem;
 	},
 	popupHTMLNormal: () => {
-		let div = document.createElement("div");
-		div.id = zen.popupID;
 		let elem = document.createElement("button");
 		elem.innerText = "Back";
 		elem.onclick = () => {
 			location.reload();
 		};
-		div.appendChild(elem);
-		document.body.appendChild(div);
-		// 		return `
-		// <a onclick="location.reload()">Normal</a>
-		// 		`
+		return elem;
 	},
 	getReaderHTML: ({ content, title }) => {
 		return `
