@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "pnpm build-dev && run-p run:chrome watch-vite watch-service-worker watch-content-css watch-content-script vite-dev",
+		"dev": "pnpm build-dev && run-p run:chrome watch-vite watch-service-worker watch-content-css watch-content-script",
 		"build": "pnpm build-vite && pnpm build-content-script --minify && pnpm build-service-worker --minify && pnpm build-content-css --minify",
 		"build-dev": "pnpm build-vite --mode development && pnpm build-content-script && pnpm build-service-worker && pnpm build-content-css",
 		"build-vite": "vite build",
@@ -51,6 +51,7 @@
 	"dependencies": {
 		"@google/generative-ai": "^0.3.0",
 		"@supabase/supabase-js": "^2.39.8",
-		"fastembed": "^1.14.1"
+		"fastembed": "^1.14.1",
+		"openai": "^4.29.0"
 	}
 }

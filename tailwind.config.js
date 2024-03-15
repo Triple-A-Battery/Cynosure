@@ -10,8 +10,14 @@ export default {
 				accent: '#70E9A1',
 				background: '#D9D9D9',
 				foreground: '#1A1A1A'
+			},
+			fontFamily: {
+				sans: ['"Jost*"']
 			}
 		}
 	},
-	plugins: [require('daisyui')]
+	plugins: [require('daisyui')],
+	daisyui: {
+		themes: ["retro"],
+	},
 };
