@@ -1,17 +1,34 @@
-import adapter from '@sveltejs/adapter-auto';
+import chromeAdapter from 'sveltekit-adapter-chrome-extension';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+let adapters = [
+	chromeAdapter({
+		pages: 'build/extension',
+		assets: 'build/extension',
+		strict: false
+	})
+]
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
-	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 
 	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter()
+		adapter: {
+			name: 'svelte-adapter-chrome',
+			async adapt(argument) {
+				await Promise.all(adapters.map(item =>
+					Promise.resolve(item).then(resolved => resolved.adapt(argument))
+				))
+			}
+		},
+		appDir: "app",
+		csrf: { // Server stuff down the line
+			checkOrigin: false,
+		},
+		alias: {
+			'$extension': 'src/extension'
+		}
 	}
 };
 

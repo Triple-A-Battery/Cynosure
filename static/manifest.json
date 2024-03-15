@@ -1,0 +1,10 @@
+{
+	"manifest_version": 3,
+	"name": "Cynosure",
+	"version": "0.1.0",
+	"description": "Ensuring you stay focused.",
+	"action": {
+		"default_title": "Cynosure",
+		"default_popup": "index.html"
+	}
+}
