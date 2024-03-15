@@ -1,5 +1,6 @@
 import { YoutubeTranscript } from 'youtube-transcript';
-import { summarize } from '$lib/gemini';
+import { summarize } from '$lib/ai';
+import { injectComponent } from '$lib/helper';
 
 function extractVideoId(url) {
 	var videoId = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -9,6 +10,8 @@ function extractVideoId(url) {
 const summarizer = {
 	name: "summarizer",
 	description: "Summarize Texts and YouTube videos",
+	currentURL: '',
+	summary: '',
 	fetchTranscript: async (url: string) => { // Separate function in case need more features
 		let res = await YoutubeTranscript.fetchTranscript(url, { lang: "en" });
 		let transcript = "";
@@ -21,7 +24,8 @@ const summarizer = {
 		if (summarizer.currentURL == url) return
 		if (location.href.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/watch\?v=/)) {
 			let transcript = await summarizer.fetchTranscript(url);
-			console.log(await summarize(transcript));
+			summarizer.summary = await summarize(transcript)
+			injectComponent(summarizer.popupID, summarizer.popupHTML());
 		}
 	},
 	enable: () => {
@@ -32,9 +36,12 @@ const summarizer = {
 	},
 	popupID: "cynosure-summarizerPopup",
 	popupHTML: () => {
-		return `
-SUMMARIZER
-		`;
+		let asd = document.createElement("button");
+		asd.onclick = () => {
+			document.getElementById(summarizer.popupID).innerHTML = summarizer.summary;
+		}
+		asd.innerText = "Summary is ready";
+		return asd;
 	}
 };
 

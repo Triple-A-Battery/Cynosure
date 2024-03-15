@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { set, get } from '$lib/storage';
-	import { getEmbedding } from '$lib/embedding';
+	// import { getEmbedding } from '$lib/embedding';
+	import Extension from '$lib/components/Extension.svelte';
 
 	let task: string;
 
@@ -17,8 +18,21 @@
 	});
 </script>
 
-<p>I am going to focus on:</p>
-<input placeholder="Programming" bind:value={task} />
-<button on:click={save}>now</button>
-<a href="/options.html">Options</a>
-<a href="/memory.html">Memory</a>
+<Extension>
+	<div class="space-y-3">
+		<p class="text-xl">I am going to focus on:</p>
+		<input placeholder="Programming" class="input input-bordered w-full" bind:value={task} />
+		<div class="flex flex-row justify-between">
+			<a class="btn btn-primary" href="/options.html">Options</a>
+			<button on:click={save} class="btn btn-neutral">NOW</button>
+			<a class="btn btn-secondary" href="/memory.html">Memory</a>
+		</div>
+	</div>
+</Extension>
+
+<style lang="postcss">
+	btn {
+		height: 2rem;
+		min-height: 2rem;
+	}
+</style>

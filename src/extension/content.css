@@ -7,3 +7,15 @@ div[id^='cynosure-'] {
 	font-size: 16px;
 	z-index: 100000;
 }
+
+div#cynosure-summarizerPopup {
+	position: fixed;
+	top: 25px;
+	right: 25px;
+	background: peachpuff;
+	color: black;
+	font-size: 16px;
+	z-index: 100000;
+	width: 386px;
+	height: auto;
+}
