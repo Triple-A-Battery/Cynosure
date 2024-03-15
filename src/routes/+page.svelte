@@ -21,3 +21,4 @@
 <input placeholder="Programming" bind:value={task} />
 <button on:click={save}>now</button>
 <a href="/options.html">Options</a>
+<a href="/memory.html">Memory</a>
