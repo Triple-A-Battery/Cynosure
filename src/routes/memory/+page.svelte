@@ -21,7 +21,7 @@
 			});
 		}
 
-		timsort.sort(results, (a, b) => b - a);
+		timsort.sort(results, (a, b) => b.similarity - a.similarity);
 	}
 
 	onMount(async () => {
