@@ -20,3 +20,4 @@
 <p>I am going to focus on:</p>
 <input placeholder="Programming" bind:value={task} />
 <button on:click={save}>now</button>
+<a href="/options.html">Options</a>
