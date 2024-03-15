@@ -5,6 +5,3 @@ export async function POST({ request }) {
 
 	return json(tasks);
 }
-
-
-
