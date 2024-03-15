@@ -1,6 +1,7 @@
 import { get, set } from '$lib/storage';
 import { cosineSimilarity, getEmbedding } from '$lib/embedding';
 import { injectComponent } from '$lib/helper';
+import { saveStat } from './stats';
 
 let taskFocus = {
 	name: 'taskFocus',
@@ -19,14 +20,10 @@ let taskFocus = {
 
 		let stats = await get('stats');
 
+		saveStat(taskFocus.relevance)
 		if (taskFocus.relevance < 0.55) {
 			injectComponent(taskFocus.popupID, taskFocus.popupHTML(Math.round(taskFocus.relevance * 100)));
-			stats.push([new Date().toISOString(), "taskFocus", "lowRelevance", taskFocus.relevance]);
-		} else {
-			stats.push([new Date().toISOString(), "taskFocus", "highRelevance", taskFocus.relevance]);
 		}
-
-		set('stats', stats);
 
 		console.log(taskFocus.relevance);
 	},

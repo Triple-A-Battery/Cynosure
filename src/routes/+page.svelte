@@ -27,6 +27,7 @@
 			<a class="btn btn-primary w-full" href="/options.html">Options</a>
 			<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
 		</div>
+		<a class="btn btn-secondary w-full" href="/stats.html">Statistics</a>
 	</div>
 </Extension>
 
