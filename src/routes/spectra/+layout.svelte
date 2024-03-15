@@ -6,6 +6,8 @@
 	import Signup from '$lib/components/Signup.svelte';
 
 	import { user } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import supabase from '$lib/supabase';
 
 	let login = true;
 
@@ -16,6 +18,16 @@
 	function logIn() {
 		login = true;
 	}
+
+	onMount(async () => {
+		const { data } = await supabase.auth.getUser();
+
+		if (data.user) {
+			let user_data = await supabase.from('Users').select('*').eq('id', data.user.id).single();
+			$user = user_data.data;
+			console.log($user);
+		}
+	});
 </script>
 
 <main class="bg-background text-foreground">
@@ -28,7 +40,7 @@
 	</section>
 </main>
 
-{#if $user === null}
+{#if !$user.id}
 	<div
 		class="absolute z-10 bg-foreground bg-opacity-50 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center"
 	>

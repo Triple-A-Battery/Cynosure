@@ -15,18 +15,17 @@
 	let email = '';
 
 	async function signIn() {
+		console.log(email, password);
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email: email,
 			password: password
 		});
 
-		async function getUserData() {
-			const { data, error } = await supabase.from('Users').select().eq('email', email);
+		if (!error) {
+			const user_data = await supabase.from('Users').select().eq('email', email).single();
 
-			user.set(data[0]);
+			$user = user_data.data;
 		}
-
-		await getUserData();
 	}
 </script>
 

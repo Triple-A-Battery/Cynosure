@@ -28,7 +28,7 @@
 				.from('Users')
 				.insert([{ name: name, role: role, email: email }]);
 
-			user.set({ name: name, email: email, role: role });
+			$user = { name: name, email: email, role: role };
 			return { data, error };
 		}
 
