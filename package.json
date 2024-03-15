@@ -47,6 +47,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"fastembed": "^1.14.1"
+		"@supabase/supabase-js": "^2.39.8",
+		"fastembed": "^1.14.1",
+		"svelte-persisted-store": "^0.9.1"
 	}
 }
