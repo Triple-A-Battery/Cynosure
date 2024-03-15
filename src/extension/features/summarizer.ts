@@ -9,9 +9,6 @@ function extractVideoId(url) {
 const summarizer = {
 	name: "summarizer",
 	description: "Summarize Texts and YouTube videos",
-	scrollAmount: 0,
-	previousScroll: undefined,
-	currentURL: '',
 	fetchTranscript: async (url: string) => { // Separate function in case need more features
 		let res = await YoutubeTranscript.fetchTranscript(url, { lang: "en" });
 		let transcript = "";
