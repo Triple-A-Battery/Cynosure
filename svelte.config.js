@@ -1,4 +1,5 @@
 import chromeAdapter from 'sveltekit-adapter-chrome-extension';
+import nodeAdapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 let adapters = [
@@ -8,6 +9,14 @@ let adapters = [
 		strict: false
 	})
 ]
+
+if (process.env.NODE_ENV === 'production') {
+	adapters.push(
+		nodeAdapter({
+			out: 'build/server',
+		}),
+	)
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -23,7 +32,7 @@ const config = {
 			}
 		},
 		appDir: "app",
-		csrf: { // Server stuff down the line
+		csrf: { // Server stuff down the line since chrome extension can have a varying origin
 			checkOrigin: false,
 		},
 		alias: {
