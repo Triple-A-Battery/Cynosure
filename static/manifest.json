@@ -10,6 +10,7 @@
 	"background": {
 		"service_worker": "service-worker.js"
 	},
+	"permissions": ["storage", "unlimitedStorage"],
 	"content_scripts": [
 		{
 			"//all_frames": true,
