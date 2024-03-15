@@ -1,3 +1,3 @@
-<div class="w-96 h-48 p-8">
+<div class="w-96 p-8 space-y-3">
 	<slot />
 </div>
