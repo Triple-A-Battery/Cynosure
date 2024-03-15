@@ -3,8 +3,8 @@ import { cosineSimilarity, getEmbedding } from '$lib/embedding';
 import { injectComponent } from '$lib/helper';
 
 let taskFocus = {
-	name: "taskFocus",
-	description: "Focus on your tasks by preventing deviations.",
+	name: 'taskFocus',
+	description: 'Distraction check',
 	relevance: 1,
 	feature: async () => {
 		let currentTaskEmbed = await get('taskEmbedding');
@@ -16,7 +16,10 @@ let taskFocus = {
 		taskFocus.relevance = cosineSimilarity(currentPageEmbed, currentTaskEmbed);
 
 		if (taskFocus.relevance < 0.55) {
-			injectComponent(taskFocus.popupID, taskFocus.popupHTML(Math.round(taskFocus.relevance * 100)));
+			injectComponent(
+				taskFocus.popupID,
+				taskFocus.popupHTML(Math.round(taskFocus.relevance * 100))
+			);
 		}
 
 		console.log(taskFocus.relevance);
@@ -28,13 +31,13 @@ let taskFocus = {
 			taskFocus.feature();
 		});
 	},
-	popupID: "cynosure-taskFocus",
+	popupID: 'cynosure-taskFocus',
 	popupHTML: (relevance: Number) => {
 		return `
 <p>This task matches only ${relevance}% with your main task</p>
 <p>You might want to get back!</p>
-		`
+		`;
 	}
-}
+};
 
 export default taskFocus;

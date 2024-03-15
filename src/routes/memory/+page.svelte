@@ -34,7 +34,12 @@
 </script>
 
 <Extension>
-	<input type="text" on:input={search} class="input input-bordered w-full mb-3" />
+	<input
+		type="text"
+		placeholder="Search"
+		on:input={search}
+		class="input input-bordered w-full mb-3"
+	/>
 	{#each results as result}
 		<div class="flex flex-row justify-between">
 			<a style="margin-right: 20px" href={result.text.match(/https?:\/\/[^\s\]]+/)[0]}
@@ -43,4 +48,8 @@
 			<p>{Math.round(result.similarity * 100)}%</p>
 		</div>
 	{/each}
+	<div class="grid grid-cols-2 justify-between gap-x-3 mt-3">
+		<a class="btn btn-primary w-full" href="/options.html">Options</a>
+		<a class="btn btn-secondary w-full" href="/">Back</a>
+	</div>
 </Extension>

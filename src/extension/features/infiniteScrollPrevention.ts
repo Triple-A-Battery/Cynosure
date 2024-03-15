@@ -1,8 +1,8 @@
-import { injectComponent } from "$lib/helper";
+import { injectComponent } from '$lib/helper';
 
 const ifs = {
-	name: "infiniteScrollPrevention",
-	description: "Prevent infinite scrolling",
+	name: 'infiniteScrollPrevention',
+	description: 'Infinite scroll prevention',
 	scrollAmount: 0,
 	previousScroll: undefined,
 	feature: (e) => {
@@ -19,9 +19,11 @@ const ifs = {
 		}
 	},
 	enable: () => {
-		window.addEventListener('scroll', (e) => { ifs.feature(e) });
+		window.addEventListener('scroll', (e) => {
+			ifs.feature(e);
+		});
 	},
-	popupID: "cynosure-ifsPopup",
+	popupID: 'cynosure-ifsPopup',
 	popupHTML: () => {
 		return `
 <p>You seem to love to scroll, but are you sure its want you to be doing?</p>

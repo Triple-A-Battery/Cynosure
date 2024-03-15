@@ -22,10 +22,10 @@
 	<div class="space-y-3">
 		<p class="text-xl">I am going to focus on:</p>
 		<input placeholder="Programming" class="input input-bordered w-full" bind:value={task} />
-		<div class="flex flex-row justify-between">
-			<a class="btn btn-primary" href="/options.html">Options</a>
-			<button on:click={save} class="btn btn-neutral">NOW</button>
-			<a class="btn btn-secondary" href="/memory.html">Memory</a>
+		<button on:click={save} class="btn btn-neutral w-full">NOW</button>
+		<div class="grid grid-cols-2 justify-between gap-x-3">
+			<a class="btn btn-primary w-full" href="/options.html">Options</a>
+			<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
 		</div>
 	</div>
 </Extension>

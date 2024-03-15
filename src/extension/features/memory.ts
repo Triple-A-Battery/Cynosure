@@ -1,10 +1,10 @@
-import { getEmbedding } from "$lib/embedding";
+import { getEmbedding } from '$lib/embedding';
 
 const memory = {
-	name: "memory",
-	description: "Index all websites you visited using Smart memory",
+	name: 'memory',
+	description: 'Smart memory',
 	feature: async () => {
-		console.log(document.title)
+		console.log(document.title);
 		let embed = (await getEmbedding([document.body.innerText]))[0];
 
 		memory.db[`${document.title} [${location.href}]`] = embed;
@@ -13,12 +13,11 @@ const memory = {
 	},
 	db: {},
 	enable: async () => {
-
 		setTimeout(() => {
 			memory.feature();
 		}, 3000); // Changed to this onload
 
-		memory.db = (await chrome.storage.local.get(["memory"]))["memory"] || {};
+		memory.db = (await chrome.storage.local.get(['memory']))['memory'] || {};
 	}
 };
 
