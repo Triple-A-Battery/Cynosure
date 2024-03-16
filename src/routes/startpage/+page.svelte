@@ -16,11 +16,19 @@
 	onMount(async () => {
 		let id = (await chrome.storage.local.get(['spectra'])).spectra;
 
-		let { data } = await supabase.from('Tasks').select('*').eq('user_id', id);
+		let { data } = await supabase
+			.from('UserTaskRelations')
+			.select(
+				`
+			active,
+			task_id ( * )
+		`
+			)
+			.eq('user_id', id);
 
 		if (data) {
 			for (var i of data) {
-				tasks['Work'].push(i.task);
+				tasks['Work'].push((i.active ? '' : '~~') + i.task_id.title);
 			}
 		}
 
@@ -86,9 +94,21 @@
 					<h1 class="bg-yellow-100 w-full text-3xl bold">{category}</h1>
 					<ol class="text-lg font-normal leading-loose tracking-tight">
 						{#each tasks[category] as task, i}
-							<li class="cursor-pointer" on:click={save} on:dblclick={remove} {category} index={i}>
-								{task}
-							</li>
+							{#if task.startsWith('~~')}
+								<li>
+									<s>{task.slice(2)}</s>
+								</li>
+							{:else}
+								<li
+									class="cursor-pointer"
+									on:click={save}
+									on:dblclick={remove}
+									{category}
+									index={i}
+								>
+									{task}
+								</li>
+							{/if}
 						{/each}
 					</ol>
 					<form class="space-y-3" on:submit|preventDefault={addTask}>
