@@ -89,7 +89,7 @@
 		<div class="flex flex-row justify-between space-x-6">
 			{#each Object.keys(tasks) as category}
 				<div
-					class="py-6 px-8 w-full bg-amber-200 flex-col justify-start items-start inline-flex text-stone-900 overflow-hidden rounded-xl space-y-3"
+					class="py-6 px-8 w-full bg-primary flex-col justify-start items-start inline-flex text-stone-900 overflow-hidden rounded-xl space-y-3"
 				>
 					<h1 class="bg-yellow-100 w-full text-3xl bold">{category}</h1>
 					<ol class="text-lg font-normal leading-loose tracking-tight">
@@ -114,7 +114,7 @@
 					<form class="space-y-3" on:submit|preventDefault={addTask}>
 						<input type="hidden" name="category" value={category} />
 						<input type="text" placeholder="Task..." class="input w-full" name="task" />
-						<input type="submit" class="btn btn-primary w-full" value="Add Task" />
+						<input type="submit" class="btn btn-secondary w-full" value="Add Task" />
 					</form>
 				</div>
 			{/each}
