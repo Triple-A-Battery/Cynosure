@@ -1,15 +1,16 @@
 <script lang="ts">
-	import List from '$lib/components/List.svelte';
 	import { onMount } from 'svelte';
 
 	import { getEmbedding } from '$lib/embedding';
-	import { set } from '$lib/storage';
+	import { get, set } from '$lib/storage';
 
 	let tasks = {
 		Academics: [],
 		Work: [],
 		Personal: []
 	};
+
+	let focusedTask = '';
 
 	onMount(async () => {
 		let storedTasks = { ...tasks, ...(await chrome.storage.local.get('tasks')).tasks };
@@ -18,23 +19,25 @@
 		} else {
 			tasks = storedTasks;
 		}
+
+		focusedTask = await get('task');
+		console.log(focusedTask);
 	});
 
 	async function addTask(e) {
 		const formData = new FormData(e.target as HTMLFormElement);
 
-		tasks.push(formData.get('task') as string);
+		tasks[formData.get('category')].push(formData.get('task') as string);
+		chrome.storage.local.set({ tasks });
 
-		let curTasks = await chrome.storage.local.get('tasks');
-		curTasks[category] = tasks;
-		console.log(curTasks);
-		chrome.storage.local.set({ tasks: curTasks });
-
-		tasks = [...tasks];
+		for (let [key, value] of Object.entries(tasks)) {
+			tasks[key] = [...value];
+		}
 	}
 
 	async function save(e) {
-		console.log(e.target);
+		console.log(e.target.innerText);
+		focusedTask = e.target.innerText;
 		let t = e.target.innerText;
 		let embedding = (await getEmbedding([t]))[0];
 		set('task', t);
@@ -44,8 +47,18 @@
 
 <div class="max-w-2xl h-screen m-auto">
 	<div class="flex flex-col w-full justify-center h-full">
-		<div class="w-full mb-10">
-			<input type="text" placeholder="Search" class="input input-bordered w-full" />
+		<!-- <div class="w-full mb-10"> -->
+		<!-- 	<input type="text" placeholder="Search" class="input input-bordered w-full" /> -->
+		<!-- </div> -->
+		<div>
+			{#if focusedTask}
+				<div class="mb-3">
+					<h1 class="text-2xl font-semibold text-center">Focused Task</h1>
+					<p class="font-normal leading-loose tracking-tight text-center text-6xl">
+						{focusedTask}
+					</p>
+				</div>
+			{/if}
 		</div>
 		<div class="flex flex-row justify-between space-x-6">
 			{#each Object.keys(tasks) as category}
@@ -59,6 +72,7 @@
 						{/each}
 					</ol>
 					<form class="space-y-3" on:submit|preventDefault={addTask}>
+						<input type="hidden" name="category" value={category} />
 						<input type="text" placeholder="Task..." class="input w-full" name="task" />
 						<input type="submit" class="btn btn-primary w-full" value="Add Task" />
 					</form>
