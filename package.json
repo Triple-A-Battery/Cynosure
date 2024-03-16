@@ -9,7 +9,7 @@
 		"build-vite": "vite build",
 		"build-service-worker": "esbuild src/extension/service-worker.ts --bundle --outdir=build/extension",
 		"build-content-script": "esbuild src/extension/content.ts --bundle --outdir=build/extension",
-		"build-content-css": "esbuild src/extension/content.css --bundle --outdir=build/extension",
+		"build-content-css": "tailwindcss -i src/extension/content.css -o build/extension/content.css",
 		"watch-vite": "chokidar 'src/routes/**/*' 'static/**/*' -c 'pnpm build-dev'",
 		"watch-service-worker": "chokidar src/extension/service-worker.ts -c 'pnpm build-service-worker'",
 		"watch-content-script": "chokidar 'src/extension/**/*' -c 'pnpm build-content-script'",
