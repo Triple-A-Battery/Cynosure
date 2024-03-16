@@ -2,15 +2,22 @@
 	import { user } from '$lib/stores';
 	import supabase from '$lib/supabase';
 	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 
 	let taskTitle: string;
 	let taskDescription: string;
 
 	let name: string;
+
 	let empCode: string;
+
+	let empRole: string;
+	let empEditCode: string;
 
 	let organizations = [];
 	let employees = [];
+
+	let removeCode: string;
 
 	let addEmpClicked = false;
 
@@ -32,9 +39,6 @@
 				organizations = [...organizations];
 			}
 		}
-
-		console.log($user.sessionOrgId);
-		console.log(user_data);
 	});
 
 	const addUserToOrg = async () => {
@@ -52,6 +56,23 @@
 
 			addEmpClicked = false;
 		}
+	};
+
+	const removeEmployee = async () => {
+		let { data, error } = await supabase
+			.from('UserOrganizationRelations')
+			.delete()
+			.eq('user_id', removeCode)
+			.eq('org_id', $user.sessionOrgId);
+	};
+
+	const editEmployeeRole = async () => {
+		let { data, error } = await supabase
+			.from('Users')
+			.update({ role: empRole })
+			.eq('id', empEditCode);
+
+		console.log(error);
 	};
 
 	const addTask = async () => {
@@ -132,32 +153,20 @@
 				<div>
 					<div class="flex flex-col gap-2 px-4">
 						<span class="w-full text-center font-semibold -mt-2">Employees in Organization</span>
-						<span class="text-md -mt-1 -mb-1">relavent employees</span>
+						<span class="text-md -mt-1 -mb-1"
+							>{employees.length === 0 ? 'no ' : ''}relavent employees</span
+						>
 						<div class="flex flex-col gap-4 h-[11rem] overflow-auto">
-							<div>
-								<div
-									class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
-								>
-									<div class="text-background">Employee name</div>
-									<button class="bg-accent p-1 text-foreground rounded-lg">Add Task</button>
+							{#each employees as employee}
+								<div>
+									<div
+										class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
+									>
+										<div class="text-background">{employee.name}</div>
+										<button class="bg-accent p-1 text-foreground rounded-lg">Add Task</button>
+									</div>
 								</div>
-							</div>
-							<div>
-								<div
-									class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
-								>
-									<div class="text-background">Employee name</div>
-									<button class="bg-accent p-1 text-foreground rounded-lg">Add Task</button>
-								</div>
-							</div>
-							<div>
-								<div
-									class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
-								>
-									<div class="text-background">Employee name</div>
-									<button class="bg-accent p-1 text-foreground rounded-lg">Add Task</button>
-								</div>
-							</div>
+							{/each}
 						</div>
 					</div>
 				</div>
@@ -192,7 +201,7 @@
 								<span class="w-full text-center font-semibold">not part of any right now</span>
 							{:else}
 								{#each organizations as org}
-									<div class="collapse bg-foreground text-foreground">
+									<div transition:slide class="collapse bg-foreground text-foreground">
 										<input type="radio" name="my-accordion-2" />
 										<div
 											class="collapse-title text-md font-medium flex justify-between items-center"
@@ -207,6 +216,13 @@
 												<button
 													class="text-background bg-foreground p-2 rounded-lg"
 													on:click|preventDefault={async () => {
+														if ($user.sessionOrgId === org.id) {
+															return;
+														}
+														if (employees.length !== 0) {
+															employees = [];
+														}
+
 														$user.sessionOrgId = org.id;
 
 														const { data, error } = await supabase
@@ -275,47 +291,120 @@
 			<div>Employee Details</div>
 			<div>
 				<button
-					class="bg-accent text-foreground p-2 px-4 rounded-lg"
+					class={addEmpClicked === true
+						? 'bg-red text-foreground p-2 px-4 w-12 rounded-lg'
+						: 'bg-accent text-foreground p-2 px-4 w-12 rounded-lg'}
 					on:click={() => {
-						addEmpClicked = true;
-					}}>+</button
+						addEmpClicked = addEmpClicked === true ? false : true;
+					}}>{addEmpClicked === true ? '-' : '+'}</button
 				>
 			</div>
 		</div>
-		{#if addEmpClicked}
-			<div class="w-fit rounded-lg bg-foreground p-8 text-background">
-				<form class="flex flex-col gap-4" on:submit|preventDefault={addUserToOrg}>
-					<label for="code" class="text-md">employee code</label>
-					<input
-						type="text"
-						name="code"
-						id="code"
-						class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
-						placeholder="xxx-yyy-zzz"
-						bind:value={empCode}
-					/>
+		<div class="flex w-full justify-around">
+			{#if addEmpClicked}
+				<div transition:slide class="flex gap-20">
+					<div class="w-[22rem] rounded-lg bg-foreground p-8 text-background">
+						<span class="text-lg font-semibold w-full mb-2 flex justify-center"
+							>Add New Employee</span
+						>
+						<form class="flex flex-col gap-2" on:submit|preventDefault={addUserToOrg}>
+							<label for="code" class="text-md">employee code</label>
+							<input
+								type="text"
+								name="code"
+								id="code"
+								class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
+								placeholder="xxx-yyy-zzz"
+								bind:value={empCode}
+							/>
 
-					<div class="flex items-center justify-center p-1">
-						<button class="bg-accent text-foreground p-2 w-full rounded-lg" type="submit">
-							<span>add employee</span>
-						</button>
+							<div class="flex items-center justify-center p-1 mt-2">
+								<button class="bg-accent text-foreground p-2 w-full rounded-lg" type="submit">
+									<span>add employee</span>
+								</button>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-		{/if}
-		<div class="min-w-[95%] mx-auto flex flex-col gap-4">
+					<div class="w-[22rem] rounded-lg bg-foreground p-8 text-background">
+						<span class="text-lg font-semibold w-full mb-2 flex justify-center"
+							>Remove An Employee</span
+						>
+						<form class="flex flex-col gap-4" on:submit|preventDefault={removeEmployee}>
+							<label for="code" class="text-md">employee code</label>
+							<input
+								type="text"
+								name="code"
+								id="code"
+								class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
+								placeholder="xxx-yyy-zzz"
+								bind:value={removeCode}
+							/>
+
+							<div class="flex items-center justify-center p-1">
+								<button class="bg-accent text-foreground p-2 w-full rounded-lg" type="submit">
+									<span>remove employee</span>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div
+						class="w-[22rem] rounded-lg bg-foreground p-8 text-background items-center justify-center"
+					>
+						<span class="text-lg font-semibold w-full mb-2 flex justify-center mt-2"
+							>Edit An Employee's Role</span
+						>
+						<form
+							class="flex flex-col gap-4 items-center justify-center"
+							on:submit|preventDefault={editEmployeeRole}
+						>
+							<div class="flex gap-2">
+								<div class="flex flex-col">
+									<label for="code" class="text-md">employee code</label>
+									<input
+										type="text"
+										name="code"
+										id="code"
+										class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
+										placeholder="xxx-yyy-zzz"
+										bind:value={empEditCode}
+									/>
+								</div>
+								<div class="flex flex-col">
+									<label for="code" class="text-md">new role</label>
+									<input
+										type="text"
+										name="code"
+										id="code"
+										class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
+										placeholder="xxx-yyy-zzz"
+										bind:value={empRole}
+									/>
+								</div>
+							</div>
+
+							<div class="flex items-center justify-center p-1 w-full">
+								<button class="bg-accent text-foreground p-2 w-full rounded-lg" type="submit">
+									<span>edit employee</span>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			{/if}
+		</div>
+		<div class="min-w-[95%] mx-auto flex flex-col gap-4 mt-8">
 			{#if employees.length === 0}
 				<div class="w-full text-center font-semibold">No employees in organization</div>
 			{:else}
 				{#each employees as employee}
-					<div class="collapse bg-foreground text-foreground bg-opacity-100">
+					<div transition:slide class="collapse bg-foreground text-foreground bg-opacity-100">
 						<input type="radio" name="my-accordion-2" />
 						<div class="collapse-title text-xl font-medium flex justify-between items-center">
 							<div class="text-background">{employee.name}</div>
 							<div class="flex gap-4">
-								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 1</div>
-								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 2</div>
-								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 3</div>
+								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">
+									{employee.role}
+								</div>
 							</div>
 						</div>
 						<div class="collapse-content flex w-fit">
