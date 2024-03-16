@@ -26,7 +26,7 @@
 					...organizations,
 					{ name: org_data['data']['name'], id: data[i]['org_id'] }
 				];
-				console.log(org_data['data']['name']);
+				console.log(org_data);
 			}
 		}
 	});
@@ -172,11 +172,11 @@
 										<div
 											class="collapse-title text-md font-medium flex justify-between items-center"
 										>
-											<div class="text-background font-semibold">temp name</div>
+											<div class="text-background font-semibold">{org['name']}</div>
 										</div>
 										<div class="collapse-content ml-auto">
 											<div class="bg-accent text-foreground p-1 text-sm rounded-lg">
-												Code: b8008658-d2a4-4492-8288-3a5bbaf6925f
+												Code: {org['id']}
 											</div>
 										</div>
 									</div>
