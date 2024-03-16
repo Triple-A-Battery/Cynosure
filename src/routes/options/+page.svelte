@@ -43,9 +43,10 @@
 			</div>
 		{/each}
 	</form>
-	<div class="grid grid-cols-2 justify-between gap-x-3 mt-3">
+	<div class="grid grid-cols-3 justify-between gap-x-3 mt-3">
 		<a class="btn btn-primary w-full" href="/">Back</a>
 		<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
+		<a class="btn btn-secondary w-full" href="/stats.html">Statistics</a>
 	</div>
 </Extension>
 
