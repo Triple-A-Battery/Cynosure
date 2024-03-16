@@ -30,23 +30,35 @@ Rooted in the insights of Lilian Anthonysamy's paper "Self-regulation Strategic 
 
 ## Technologies
 
-1. Sveltekit
+1. SvelteKit (Custom-made adapter to compile Chrome extension)
 2. Tailwind CSS
 3. Supabase
 4. Chrome API
 5. Gemini
 
-## Usage
+## Installation
 
-Simply install the Cynosure extension from the Chrome Web Store and follow the setup instructions. Choose the version that best fits your needs and start experiencing a more focused and productive internet browsing experience.
+```sh
+git clone https://github.com/Triple-A-Battery/Cynosure.git
+cp env.example.ts env.ts   # Edit variables accordingly
+cd Cynosure
+pnpm i
+pnpm build
+pnpm vite-dev
+```
 
-Rough:
+Install the extensions:
 
-taskfocus & memory:
-fastembed
+1. Open your Chromium-based browser and navigate to `chrome://extensions`.
+2. Enable `Developer mode` and click on `Load unpacked`.
+3. Select the folder `build/extension` to load the extension.
 
-Zen:
-made use of readibility.js from mozilla
+## Deployment
 
-Summarizer:
-gemini is overloaded so find another AI to use
+The `build/server` contains the backend embeddings API. This can be deployed by easily using our Docker image.
+
+The default port is `8009`, and can be changed in `env.ts` before building. The reason for an unorthodox methodology of environment variables is because of the static nature of Chrome extensions.
+
+## License
+
+[MIT License](LICENSE)
