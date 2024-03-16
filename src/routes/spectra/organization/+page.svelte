@@ -57,11 +57,11 @@
 		} else {
 			let exec = await supabase
 				.from('UserOrganizationRelations')
-				.insert({ user_id: $user['id'], org_id: data['id'] });
+				.insert({ user_id: $user['id'], org_id: data['id'], admin: true });
 
 			$user = { ...$user, sessionOrgId: data['id'] };
 
-			organizations = [...organizations, { name: org_data['data']['name'], id: data[i]['org_id'] }];
+			organizations = [...organizations, { name: name, id: data[i]['org_id'] }];
 		}
 
 		return { data, error };
