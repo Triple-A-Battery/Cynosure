@@ -36,7 +36,7 @@
 	<section class="min-h-screen m-auto flex flex-col">
 		<div class="flex">
 			<Navbar></Navbar>
-			<div class="h-full w-full flex flex-col ml-[18%]">
+			<div class="h-screen w-full flex flex-col ml-[18%]">
 				<div class="h-full flex-grow">
 					<slot />
 				</div>
