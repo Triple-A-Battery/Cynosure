@@ -4,12 +4,12 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				red: '#EB4747',
+				red: '#EF9995',
 				blue: '#71C9DA',
 				yellow: '#FFF200',
-				accent: '#70E9A1',
-				background: '#D9D9D9',
-				foreground: '#1A1A1A'
+				accent: '#A4CBB4',
+				background: '#ECE3CA',
+				foreground: '#2E282A'
 			},
 			fontFamily: {
 				sans: ['"Jost"'],
