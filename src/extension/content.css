@@ -1,61 +1,33 @@
-<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-div[id^='cynosure-'] {
-	position: fixed;
-	top: 25px;
-	right: 25px;
-	/* background: red; */
-	color: black;
-	font-size: 16px;
-=======
-/* div[id^='cynosure-'] { */
-/* 	position: fixed; */
-/* 	bottom: 15vh; */
-/* 	right: 0px; */
-/* 	background: red; */
-/* 	color: black; */
-/* 	font-size: 16px; */
-/* 	z-index: 100000; */
-/* } */
-/**/
 
 div#cynosure-warn {
 	position: fixed;
 	top: 10vh;
 	right: 10vh;
-	background: #d9d9d9;
-	color: #1a1a1a;
+	padding: 1rem 1rem 1rem 1rem;
 	border: 1px;
-	border-color: #eb4747;
->>>>>>> ffa61d3 (chore: updated ui)
+	@apply text-foreground;
+	@apply bg-background;
+	@apply border-red;
 	z-index: 100000;
 }
 
 div#cynosure-summarizerPopup {
 	position: fixed;
-<<<<<<< HEAD
-	top: 25px;
-	right: 25px;
-	/* background: peachpuff; */
-=======
 	top: 10vh;
 	right: 0px;
-	background: peachpuff;
->>>>>>> ffa61d3 (chore: updated ui)
-	color: black;
 	font-size: 16px;
 	z-index: 100000;
 	width: 386px;
 	height: auto;
 	@apply bg-white;
+	@apply text-background;
 }
 div#cynosure-zen {
 	position: fixed;
 	bottom: 10vh;
-	background: #70e9a1;
 	border: 0;
 	width: 60px;
 	border-radius: 30px;
@@ -64,13 +36,14 @@ div#cynosure-zen {
 	align-content: center;
 	padding: 6px 6px 6px 6px;
 	z-index: 100000;
+	@apply bg-accent;
 }
 
 div#cynosure-zen a {
-	color: #1a1a1a;
 	display: inline-block;
 	height: 24px;
 	width: 100%;
+	@apply: text-foreground;
 }
 
 div#cynosure-zen svg {
