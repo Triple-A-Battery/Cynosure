@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	let taskTitle: string;
+	let taskTitle: string = '';
 	let taskDescription: string;
 
 	let name: string;
@@ -16,9 +16,14 @@
 
 	let organizations = [];
 	let employees = [];
+	let tasks = [];
 
 	let weekly = 0;
 	let monthly = 0;
+
+	let taskId: string;
+
+	let taskConfirmed = false;
 
 	let removeCode: string;
 
@@ -42,7 +47,6 @@
 		if (error) {
 			console.error('Error fetching data:', error);
 		} else {
-			console.log('Data from last week:', data);
 			let productiveCount = 0;
 			let unproductiveCount = 0;
 			for (let i of data) {
@@ -73,7 +77,6 @@
 		if (error) {
 			console.error('Error fetching data:', error);
 		} else {
-			console.log('Data from this month:', data);
 			let productiveCount = 0;
 			let unproductiveCount = 0;
 			for (let i of data) {
@@ -106,8 +109,6 @@
 			}
 		}
 
-		console.log($user.sessionOrgId);
-		// console.log(user_data);
 		getWeekly();
 		getMonthly();
 	});
@@ -149,7 +150,12 @@
 	const addTask = async () => {
 		const { data, error } = await supabase
 			.from('Tasks')
-			.insert([{ title: taskTitle, description: taskDescription }]);
+			.insert([{ title: taskTitle, description: taskDescription }])
+			.select()
+			.single();
+
+		taskId = data['id'];
+		taskConfirmed = true;
 	};
 
 	const createOrg = async () => {
@@ -175,6 +181,42 @@
 		return { data, error };
 	};
 
+	const getAllOrgTasks = async () => {
+		let { data, error } = await supabase
+			.from('UserOrganizationRelations')
+			.select()
+			.eq('org_id', $user.sessionOrgId);
+
+		if (!error) {
+			for (let i = 0; i < data.length; i++) {
+				let taskRelation = await supabase
+					.from('UserTaskRelations')
+					.select()
+					.eq('user_id', data[i].user_id);
+
+				for (let j = 0; j < taskRelation.data.length; j++) {
+					if (taskRelation.data[j].active) {
+						let taskTitle = await supabase
+							.from('Tasks')
+							.select()
+							.eq('id', taskRelation.data[j].task_id)
+							.single();
+
+						let taskToAdd = {
+							emp_id: data[i].user_id,
+							title: taskTitle.data.title,
+							taskId: taskRelation.data[j].task_id,
+							active: taskRelation.data[j].active
+						};
+
+						tasks.push(taskToAdd);
+						tasks = [...tasks];
+					}
+				}
+			}
+		}
+	};
+
 	// red < 25
 	// yellow 25 < 50
 	// blue 50 < 75
@@ -182,7 +224,13 @@
 </script>
 
 <section class="flex flex-col p-4 w-full">
-	<h1 class="text-2xl mb-4 -mt-2">Hey! Ready to get working productively?</h1>
+	<div class="flex gap-2">
+		<h1 class="text-2xl mb-4 -mt-2">Hey! Ready to get working productively?</h1>
+		{#if taskTitle !== ''}
+			<h1 class="text-2xl mb-4 -mt-2">You are working on <strong>{taskTitle}</strong></h1>
+		{/if}
+	</div>
+
 	<div class="text-2xl my-4 font-semibold">Dashboard</div>
 	<div class="flex justify-around p-4 w-full">
 		<div class="bg-foreground rounded-xl p-5 bg-opacity-5">
@@ -215,9 +263,19 @@
 							bind:value={taskDescription}
 						/>
 					</div>
-					<div class="flex items-center justify-center p-1">
+					<div class="flex items-center justify-center p-1 gap-2">
 						<button class="bg-foreground text-background p-2 w-full rounded-lg" type="submit">
-							<span>add task</span>
+							<span>confirm</span>
+						</button>
+						<button
+							class="bg-foreground text-background p-2 w-full rounded-lg"
+							on:click|preventDefault={() => {
+								taskTitle = '';
+								taskDescription = '';
+								taskConfirmed = false;
+							}}
+						>
+							<span>reset</span>
 						</button>
 					</div>
 				</form>
@@ -229,14 +287,25 @@
 						>
 						<div class="flex flex-col gap-4 h-[11rem] overflow-auto">
 							{#each employees as employee}
-								<div>
-									<div
-										class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
-									>
-										<div class="text-background">{employee.name}</div>
-										<button class="bg-accent p-1 text-foreground rounded-lg">Add Task</button>
+								{#if employee.id !== $user.id}
+									<div>
+										<div
+											class="flex w-full bg-foreground justify-between p-2 items-center gap-8 rounded-lg"
+										>
+											<div class="text-background">{employee.name}</div>
+											<button
+												on:click={async () => {
+													const { data, error } = await supabase
+														.from('UserTaskRelations')
+														.insert([{ user_id: employee.id, task_id: taskId }]);
+												}}
+												class={taskConfirmed === true
+													? 'bg-accent p-1 text-foreground rounded-lg'
+													: 'bg-red p-1 text-foreground rounded-lg'}>Add Task</button
+											>
+										</div>
 									</div>
-								</div>
+								{/if}
 							{/each}
 						</div>
 					</div>
@@ -302,6 +371,15 @@
 															.eq('org_id', $user.sessionOrgId);
 
 														if (!error) {
+															const org_name = await supabase
+																.from('Organizations')
+																.select()
+																.eq('id', $user.sessionOrgId)
+																.single();
+
+															name = org_name.data.name;
+															getAllOrgTasks();
+
 															for (let i = 0; i < data.length; i++) {
 																const userData = await supabase
 																	.from('Users')
@@ -357,6 +435,47 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="flex flex-col">
+		<span class="text-2xl my-4 font-semibold">Task Details</span>
+		{#if name}
+			<span class="text-xl mb-2">you have selected <strong>{name}</strong> organization</span>
+			<div class="flex flex-col gap-4 text-md">
+				{#each tasks as task}
+					<div transition:slide class="collapse bg-foreground text-foreground bg-opacity-100">
+						<input type="radio" name="my-accordion-2" />
+						<div class="collapse-title text-xl font-medium flex justify-between items-center">
+							<div class="text-background">{task.title}</div>
+							<div class="flex gap-4">
+								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">
+									{task.emp_id}
+								</div>
+							</div>
+						</div>
+						<div class="collapse-content flex w-full justify-between">
+							<div class="bg-accent text-foreground p-1 text-md rounded-lg">
+								Code: {task.taskId}
+							</div>
+							<button
+								class="w-fit bg-red p-2 rounded-lg font-semibold"
+								on:click={async () => {
+									let { data, error } = await supabase
+										.from('UserTaskRelations')
+										.update({ active: false })
+										.eq('user_id', task.emp_id)
+										.eq('task_id', task.taskId);
+									console.log(data, error);
+								}}>complete</button
+							>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<div class="w-full text-center font-semibold">you havent selected an organization</div>
+		{/if}
+	</div>
+
 	<div>
 		<div class="text-2xl my-4 font-semibold flex justify-between">
 			<div>Employee Details</div>
