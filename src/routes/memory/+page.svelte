@@ -48,8 +48,9 @@
 			<p>{Math.round(result.similarity * 100)}%</p>
 		</div>
 	{/each}
-	<div class="grid grid-cols-2 justify-between gap-x-3 mt-3">
-		<a class="btn btn-primary w-full" href="/options.html">Options</a>
-		<a class="btn btn-secondary w-full" href="/">Back</a>
+	<div class="grid grid-cols-3 justify-between gap-x-3 mt-3">
+		<a class="btn btn-secondary w-full" href="/options.html">Options</a>
+		<a class="btn btn-primary w-full" href="/">Back</a>
+		<a class="btn btn-secondary w-full" href="/stats.html">Statistics</a>
 	</div>
 </Extension>
