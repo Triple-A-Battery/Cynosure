@@ -8,11 +8,8 @@ const openai = new OpenAI({
 export async function summarize(text: string) {
 	const chatCompletion = await openai.chat.completions.create({
 		messages: [{
-			role: 'user', content: `Summarize the following video, do not add any headings, just output the summary in one SINGLE paragraph.
-The video:
-
-${text}
-		` }],
+			role: 'user', content: text
+		}],
 		model: 'gpt-3.5-turbo',
 	});
 

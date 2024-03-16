@@ -7,9 +7,10 @@
 	let enabled;
 	let loading = true;
 
-	async function enableSpectra() {
+	async function enableSpectra(e) {
+		let formData = new FormData(e.target);
 		let id = crypto.randomUUID();
-		const { data, error } = await supabase.from('Users').insert({ id });
+		const { data, error } = await supabase.from('Users').insert({ id, name: formData.get('name') });
 		if (error) {
 			console.error(error);
 		} else {
@@ -28,7 +29,10 @@
 	<Loading {loading}>
 		<div class="space-y-3">
 			{#if !enabled}
-				<button class="btn btn-neutral w-full" on:click={enableSpectra}>Enable Spectra</button>
+				<form on:submit|preventDefault={enableSpectra}>
+					<input placeholder="Name" class="input input-bordered w-full mb-3" name="name" />
+					<input value="Enable Spectra" class="btn btn-neutral w-full" type="submit" />
+				</form>
 			{:else}
 				<p class="text-xl">Your client ID:</p>
 				<p class="text-xl">{enabled}</p>
