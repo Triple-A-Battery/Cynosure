@@ -19,8 +19,7 @@
 	<div class="flex flex-col text-2xl flex-grow justify-center gap-20 w-full">
 		<ul class={hoverItem}><a href="/spectra">Dashboard</a></ul>
 		<ul class={hoverItem}><a href="/spectra/organization">Organization</a></ul>
-		<ul class={hoverItem}><a href="#">Statistics</a></ul>
-		<ul class={hoverItem}><a href="#">Tasks</a></ul>
+		<ul class={hoverItem}><a href="/spectra/statistics">Statistics</a></ul>
 	</div>
 	<button
 		on:click|preventDefault={signOut}
