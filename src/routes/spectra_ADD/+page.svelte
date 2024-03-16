@@ -34,5 +34,7 @@
 				<p class="text-xl">{enabled}</p>
 			{/if}
 		</div>
+
+		<a class="btn btn-primary w-full" href="/">Back</a>
 	</Loading>
 </Extension>

@@ -22,13 +22,13 @@
 	<div class="space-y-3">
 		<p class="text-xl">I am going to focus on:</p>
 		<input placeholder="Programming" class="input input-bordered w-full" bind:value={task} />
-		<button on:click={save} class="btn btn-primary w-full">NOW</button>
+		<button on:click={save} class="btn btn-primary w-full">Now</button>
 		<div class="grid grid-cols-3 justify-between gap-x-3">
 			<a class="btn btn-secondary w-full" href="/options.html">Options</a>
 			<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
 			<a class="btn btn-secondary w-full" href="/stats.html">Statistics</a>
 		</div>
-		<a class="btn btn-secondary w-full" href="/spectra_ADD.html">Spectra</a>
+		<a class="btn btn-secondary w-full" href="/spectra_ADD.html">Show ID</a>
 	</div>
 </Extension>
 
