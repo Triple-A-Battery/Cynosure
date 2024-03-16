@@ -42,7 +42,7 @@
 
 @media (min-width: 641px) {
 	.site-header::before {
-		height: calc(500px + 100vw/10);
+		height: calc(500px + 100vw / 10);
 	}
 }
 
@@ -65,7 +65,6 @@ g {
 footer g {
 	fill: var(--color1);
 }
-
 
 .hero-title span {
 	color: var(--color0);
@@ -146,16 +145,15 @@ h2,
 .h2 {
 	font-size: 36px;
 	line-height: 46px;
-	letter-spacing: 1px
+	letter-spacing: 1px;
 }
-
 
 h3,
 .h3,
 blockquote {
 	font-size: 30px;
 	line-height: 40px;
-	letter-spacing: 1px
+	letter-spacing: 1px;
 }
 
 h4,
@@ -166,14 +164,14 @@ h6,
 .h6 {
 	font-size: 20px;
 	line-height: 30px;
-	letter-spacing: 1px
+	letter-spacing: 1px;
 }
 
 @media (max-width: 640px) {
 	.h1-mobile {
 		font-size: 36px;
 		line-height: 46px;
-		letter-spacing: -0.2px
+		letter-spacing: -0.2px;
 	}
 
 	.h2-mobile {
@@ -186,7 +184,7 @@ h6,
 	.h3-mobile {
 		font-size: 20px;
 		line-height: 30px;
-		letter-spacing: -0.1px
+		letter-spacing: -0.1px;
 	}
 
 	.h4-mobile,
@@ -194,17 +192,15 @@ h6,
 	.h6-mobile {
 		font-size: 18px;
 		line-height: 27px;
-		letter-spacing: -0.1px
+		letter-spacing: -0.1px;
 	}
 }
-
-
 
 /*********/
 
 .header-links a:not(.button):hover,
 .header-links a:not(.button):active {
-	color: var(--color0)
+	color: var(--color0);
 }
 
 .text-light h1,
@@ -250,7 +246,7 @@ h6,
 	border: 1px solid var(--color3);
 	background: var(--color0);
 	mix-blend-mode: unset;
-	transition: .3s;
+	transition: 0.3s;
 }
 
 .feature-inner:hover {
@@ -278,12 +274,7 @@ span.pricing-table-price-amount.h1 {
 	box-shadow: 0px 0px 0px 1px var(--color3);
 	background: var(--color0);
 	mix-blend-mode: unset;
-	transition: .3s;
-}
-
-.pricing-tables-wrap div:nth-child(2) .pricing-table-inner {
-	box-shadow: 0px 0px 0px 5px var(--color3);
-	transform: scale(1.05);
+	transition: 0.3s;
 }
 
 .pricing-table-inner:hover {
@@ -297,7 +288,7 @@ span.pricing-table-price-amount.h1 {
 }
 
 .pricing-table-inner .h3,
-.pricing-table-inner .h3~* {
+.pricing-table-inner .h3 ~ * {
 	color: var(--color3);
 }
 
@@ -317,9 +308,14 @@ span.pricing-table-price-amount.h1 {
 .button-secondary {
 	color: var(--color4) !important;
 	/*background-image: linear-gradient(56deg, var(--color3) 20%, var(--color2) 50%, var(--color3) 80%) !important;*/
-	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 60%) !important;
+	background-image: linear-gradient(
+		56deg,
+		var(--color0) -25%,
+		var(--color1) 50%,
+		var(--color3) 60%
+	) !important;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 	border: 1px solid var(--color3);
 }
 
@@ -327,35 +323,45 @@ span.pricing-table-price-amount.h1 {
 	color: var(--color0) !important;
 	background-position: 100% 0;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 }
 
 .button-sm {
 	color: var(--color4) !important;
-	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 60%) !important;
+	background-image: linear-gradient(
+		56deg,
+		var(--color0) -25%,
+		var(--color1) 50%,
+		var(--color3) 60%
+	) !important;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 }
 
 .button-sm:hover {
 	color: var(--color0) !important;
 	background-position: 100% 0;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 }
 
 .button-primary {
 	color: var(--color4) !important;
-	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 80%) !important;
+	background-image: linear-gradient(
+		56deg,
+		var(--color0) -25%,
+		var(--color1) 50%,
+		var(--color3) 80%
+	) !important;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 }
 
 .button-primary:hover {
 	color: var(--color0) !important;
 	background-position: 100% 0;
 	background-size: 300% 100%;
-	transition: .4s;
+	transition: 0.4s;
 }
 
 /*mailing*/
@@ -445,7 +451,6 @@ span.pricing-table-price-amount.h1 {
 
 .site-footer {
 	background: linear-gradient(56deg, var(--color3) 50%, var(--color2) 100%);
-	;
 	border: none;
 	color: var(--color1);
 }
