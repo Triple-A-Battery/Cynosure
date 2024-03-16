@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 div[id^='cynosure-'] {
 	position: fixed;
 	top: 25px;
 	right: 25px;
-	background: red;
+	/* background: red; */
 	color: black;
 	font-size: 16px;
 	z-index: 100000;
@@ -12,10 +16,11 @@ div#cynosure-summarizerPopup {
 	position: fixed;
 	top: 25px;
 	right: 25px;
-	background: peachpuff;
+	/* background: peachpuff; */
 	color: black;
 	font-size: 16px;
 	z-index: 100000;
 	width: 386px;
 	height: auto;
+	@apply bg-white;
 }
