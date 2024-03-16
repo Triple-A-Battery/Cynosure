@@ -66,7 +66,8 @@
 </script>
 
 <section class="flex flex-col p-4 w-full">
-	<h1 class="text-2xl mb-4">Hey! Ready to get working productively?</h1>
+	<h1 class="text-2xl mb-4 -mt-2">Hey! Ready to get working productively?</h1>
+	<div class="text-2xl my-4 font-semibold">Dashboard</div>
 	<div class="flex justify-around p-4 w-full">
 		<div class="bg-foreground rounded-xl p-5 bg-opacity-5">
 			<div class="text-foreground text-2xl font-semibold text-center mb-4">Tasks</div>

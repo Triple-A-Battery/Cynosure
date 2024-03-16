@@ -33,16 +33,12 @@
 </script>
 
 <main class="bg-background text-foreground">
-	<section class="min-h-screen m-auto flex flex-col">
-		<div class="flex">
-			<Navbar></Navbar>
-			<div class="h-screen w-full flex flex-col ml-[18%]">
-				<div class="h-full flex-grow">
-					<slot />
-				</div>
-				<Footer></Footer>
-			</div>
+	<section class="w-[80%] mx-auto m-auto flex flex-col">
+		<Navbar></Navbar>
+		<div class="flex-grow">
+			<slot />
 		</div>
+		<Footer></Footer>
 	</section>
 </main>
 
