@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+	<link rel="stylesheet" href="./cynosure/style.min.css">
+	<link rel="stylesheet" href="./cynosure/theme.css">
+	<link rel="stylesheet preload" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com/">
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+	<style>
+		.is-revealing {
+			position: relative;
+			transform: translateY(40px);
+			opacity: 0;
+			transition: 0.6s all cubic-bezier(0.5, -0.01, 0, 1.005);
+		}
+
+		.is-revealing.active {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	</style>
+	<script>
+
+		var animationDelay = 100; // ms
+
+		window.addEventListener("scroll", reveal);
+
+		var elems = [];
+		function reveal() {
+			var reveals = document.querySelectorAll(".is-revealing");
+			for (var i = 0; i < reveals.length; i++) {
+				var windowHeight = window.innerHeight;
+				var elementTop = reveals[i].getBoundingClientRect().top;
+				var elementBottom = reveals[i].getBoundingClientRect().bottom;
+				var elementVisible = reveals[i].getBoundingClientRect().height / 2;
+
+				if (
+					elementBottom - elementVisible < windowHeight &&
+					elementTop > 0 &&
+					!reveals[i].classList.contains('activate')
+				) {
+					reveals[i].classList.add("activate");
+					elems.push(reveals[i]);
+				}
+			}
+		}
+
+		function update() {
+			while (elems.length) {
+				elems[0].classList.add('active');
+				elems.shift();
+				return;
+			}
+			reveal();
+		}
+
+		setInterval(update, animationDelay);
+	</script>
+	<script defer="" src="./cynosure/saved_resource"></script>
+	<script>window.plausible = window.plausible || function () {(window.plausible.q = window.plausible.q || []).push(arguments)}</script>
+	<title>Cynosure</title>
+	<style type="text/css">
+		html {
+			scroll-behavior: smooth;
+		}
+
+		/* Tooltip text */
+		.tooltip+.tooltiptext {
+			background-color: white;
+			color: black;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+
+			display: flex;
+			flex-direction: column;
+
+			position: absolute;
+			z-index: 1;
+			width: 200px;
+			top: 100%;
+			margin-left: 40px;
+			transform: translate(-50%, 0%);
+
+			transition: .2s;
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.header-links a:not(.button) {
+			padding: 8px 36px 8px 0px;
+		}
+
+		/*some stupid complex selection*/
+		.header-links a:is(.tooltiplink) {
+			margin: 0;
+			padding: 20px;
+			font-size: 0.8em;
+			color: black;
+			font-weight: 400;
+
+			/*For button*/
+			border: none;
+			background: none;
+			cursor: pointer;
+		}
+
+		.tooltip:hover+.tooltiptext {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		.tooltiptext:hover {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		#logout {
+			color: #f88;
+		}
+
+		@media (max-width: 600px) {
+			.header-links li:nth-child(2) {
+				display: none;
+			}
+		}
+
+		a.highlight {
+			background: linear-gradient(56deg, var(--color1) 40%, var(--color2) 50%, var(--color1) 60%);
+			background-size: 300% 100%;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			animation: colorgrad 2s 0s infinite linear;
+		}
+	</style>
+</head>
+
+<body class="is-boxed has-animations">
+
+	<div class="body-wrap boxed-container">
+		<header class="site-header">
+			<div class="container">
+				<div class="site-header-inner">
+					<div class="brand header-brand">
+						<h1 class="m-0">
+							<a href="/">
+								<img src="./cynosure/logo.png" style="width: 50px;">
+							</a>
+						</h1>
+					</div>
+					<ul class="header-links list-reset m-0">
+						<li>
+							<a href="/#features">Features</a>
+						</li>
+						<li>
+							<a href="/#pricing">Pricing</a>
+						</li>
+						<li>
+							<a class="button button-sm button-shadow" href="/#pricing">Get started</a>
+						</li>
+					</ul>
+					<script>
+
+						if (!document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)) {
+							document.getElementById('logout').style.display = 'none';
+						}
+
+						function logout() {
+							document.cookie = "token" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+							window.location.reload();
+						}
+					</script>
+				</div>
+			</div>
+		</header>
+		<main>
+			<section class="hero text-light text-center">
+				<div class="container-sm">
+					<div class="hero-inner">
+						<h1 class="hero-title h2-mobile mt-0 is-revealing black activate active"><span
+								class="highlight">Skyrocket</span> your team's productivity with <span
+								class="highlight">Cynosure</span></h1>
+						<p class="hero-paragraph is-revealing activate active">Cynosure is your all-in-one solution to
+							keep your employees focused on their tasks.<br>No more nagging team members for updates on
+							projects.</p>
+						<p class="hero-cta is-revealing activate active"><a
+								class="button button-secondary button-shadow" href="#features"
+								onclick="plausible(&#39;Cool, gimme the details!&#39;)">Get productive</a></p>
+						<div class="hero-media">
+							<img src="./cynosure/hero.png" alt=""
+								style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="features section text-center" id="features">
+				<div class="container">
+					<div class="features-inner section-inner has-top-divider">
+						<h2 class="section-title mt-0">Why us?</h2>
+						<div class="features-wrap">
+							<div class="feature is-revealing">
+								<div class="feature-inner">
+									<!-- <div class="feature-icon"> -->
+									<!-- 	<img src="./cynosure/taskfocus.png" -->
+									<!-- 		alt="Freedom in hosting unlimited players and unlimited mods"> -->
+									<!-- </div> -->
+									<h4 class="feature-title h3-mobile">Focus on your tasks</h4>
+									<p class="text-sm">
+										Set a task that you'd like to accomplish by the end of your internet session.
+									</p>
+								</div>
+							</div>
+							<div class="feature is-revealing">
+								<div class="feature-inner">
+									<!-- <div class="feature-icon"> -->
+									<!-- 	<img src="./cynosure/ifs.png" alt="Fair cheap pricing with no hidden costs"> -->
+									<!-- </div> -->
+									<h4 class="feature-title h3-mobile">Prevent addictive scrolling habits</h4>
+									<p class="text-sm">
+										Be notified while addictively scrolling, so you can be more specific on tasks.
+									</p>
+								</div>
+							</div>
+							<div class="feature is-revealing">
+								<div class="feature-inner">
+									<div class="feature-icon">
+										<img src="./cynosure/support.svg"
+											alt="Specialized support on making a Minecraft server">
+									</div>
+									<h4 class="feature-title h3-mobile">Support</h4>
+									<p class="text-sm">New to Minecraft server hosting? Unsure how to get plugins to
+										work? Confused on a plan to get? Anything it be, we are here for you!</p>
+								</div>
+							</div>
+							<div class="feature is-revealing">
+								<div class="feature-inner">
+									<div class="feature-icon">
+										<img src="./cynosure/simplicity.svg"
+											alt="We work on making Minecraft server easy to make and use">
+									</div>
+									<h4 class="feature-title h3-mobile">Simplicity</h4>
+									<p class="text-sm">Everyone prefers simplicity, including us. Which is why we have
+										built a minimal yet powerful system so you spend the time having fun with your
+										friends!</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="features-extended section">
+				<div class="container">
+					<div class="features-extended-inner section-inner has-top-divider">
+						<div class="features-extended-header text-center">
+							<div class="container-sm">
+								<h2 class="section-title mt-0">Features</h2>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/taskfocus.png" alt="Top of the line hardware for good performance">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">An eye to guide your members</h3>
+								<p>Get notified when tasks are being deviated.</p>
+								<p>Let Cynosure keep you focused.</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/dashboard.png"
+									alt="Custom subdomain to connect to, no need for IP addresses!">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">Custom Subdomain</h3>
+								<p>Get a dedicated custom subdomain that sticks with your server. The need to remember
+									long IP address just to play with your friends is a thing of the past!</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/safe.svg"
+									alt="Safe from ddos attacks and Apacche Log4j vulnerabilities on all servers">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">Safe from attacks. No kidding.</h3>
+								<p>We take security very seriously, from billing to your own personal server. All our
+									Minecraft servers are immune to Apache Log4j attacks!</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/opensource.svg" alt="Love for open source">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">Open source server management panel</h3>
+								<p>We love open source software! And what we would love even more is supporting them!
+									Every server you buy helps us contribute to open source projects like <a
+										target="_blank" rel="noopener noreferrer"
+										href="https://pterodactyl.io/">Pterodactyl</a>, our server management panel. If
+									you'd like to individually do so (which we highly appreciate!), you can do so <a
+										target="_blank" rel="noopener noreferrer nofollow"
+										href="https://www.paypal.com/paypalme/PterodactylSoftware">here</a>.</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/mods.svg"
+									alt="Limitless mods, RLCraft or Bedwars server, you&#39;re free to choose!">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">Limitless mods and plugins</h3>
+								<p>With us, you are open to the gateway of limitless possibilities using mods and
+									plugins. Spigot, Bukkit, you name it. Just upload your plugins and start playing!
+								</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/stripe.svg" alt="Secure billing with Stripe">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">Manage billing with ease</h3>
+								<p>Need to cancel a server subscription? Want to change your payment method? Easily
+									manage everything billing with our partner, <a target="_blank"
+										rel="noopener noreferrer nofollow" href="https://stripe.com/">Stripe</a>.</p>
+							</div>
+						</div>
+						<div class="feature-extended">
+							<div class="feature-extended-image is-revealing">
+								<img src="./cynosure/fairpricing.svg"
+									alt="Low prices with no compromise on performance">
+							</div>
+							<div class="feature-extended-body">
+								<h3 class="mt-0">No pricing shenanigans. Ever.</h3>
+								<p>No unnecessary setup fees, confusing plans, hidden charges, or any of those
+									shinanigans. <span class="highlight">Simple, straight, transparent pricing.</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="pricing section" id="pricing">
+				<div class="container">
+
+					<div class="pricing-inner section-inner has-top-divider">
+						<div class="container-sm">
+							<h2 class="section-title mt-0 text-center" style="margin-bottom: 16px;">Pricing</h2>
+							<p class="section-paragraph" id="start">Great Minecraft servers without the high price tag.
+								Too good to be true? <span class="highlight">Try us out for 7 days!</span></p>
+						</div>
+						<div class="pricing-tables-wrap">
+							<div class="pricing-table is-revealing">
+								<div class="pricing-table-inner">
+									<div class="pricing-table-main">
+										<div class="pricing-table-header">
+											<div class="pricing-table-title mt-12 mb-16 text-secondary">Netherite</div>
+											<div class="pricing-table-price"><span
+													class="pricing-table-price-currency h3"
+													style="font-family: &#39;Lato&#39;">₹</span><span
+													class="pricing-table-price-amount h1">999</span><span
+													class="pricing-table-price-currency h4">/month</span></div>
+											<div class="pricing-table-price mb-24 pb-16 text-right"><span
+													class="pricing-table-price-currency h6">~$</span><span
+													class="pricing-table-price-amount h6">14</span></div>
+										</div>
+										<ul class="pricing-table-features list-reset text-xs mb-56">
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>1 Full Dedicated Core</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>8GB DDR4 RAM</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>60GB NVMe SSD</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Apache Log4j Exploit Protection</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing-table-cta">
+										<a class="button button-primary button-block" href="/contact">Contact us</a>
+									</div>
+								</div>
+							</div>
+							<div class="pricing-table is-revealing">
+								<div class="pricing-table-inner">
+									<div class="pricing-table-main">
+										<div class="pricing-table-header">
+											<div class="pricing-table-title mt-12 mb-16 text-primary">Atlas</div>
+											<div class="pricing-table-price"><span
+													class="pricing-table-price-currency h3"
+													style="font-family: &#39;Lato&#39;">₹</span><span
+													class="pricing-table-price-amount h1">499</span><span
+													class="pricing-table-price-currency h4">/month</span></div>
+											<div class="pricing-table-price mb-24 pb-16 text-right"><span
+													class="pricing-table-price-currency h6">~$</span><span
+													class="pricing-table-price-amount h6">7</span></div>
+										</div>
+										<ul class="pricing-table-features list-reset text-xs mb-56">
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>1 Full Dedicated Thread</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>4GB DDR4 RAM</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>25GB NVMe SSD</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Apache Log4j Exploit Protection</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>TripeOne subdomain</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing-table-cta">
+										<a class="button button-secondary button-block" href="/contact">START PLAYING
+											TODAY!</a>
+									</div>
+								</div>
+							</div>
+							<div class="pricing-table is-revealing">
+								<div class="pricing-table-inner">
+									<div class="pricing-table-main">
+										<div class="pricing-table-header">
+											<div class="pricing-table-title mt-12 mb-16 text-secondary">Iron</div>
+											<div class="pricing-table-price"><span
+													class="pricing-table-price-currency h3"
+													style="font-family: &#39;Lato&#39;">₹</span><span
+													class="pricing-table-price-amount h1">299</span><span
+													class="pricing-table-price-currency h4">/month</span></div>
+											<div class="pricing-table-price mb-24 pb-16 text-right"><span
+													class="pricing-table-price-currency h6">~$</span><span
+													class="pricing-table-price-amount h6">4</span></div>
+										</div>
+										<ul class="pricing-table-features list-reset text-xs mb-56">
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>1 Full Dedicated Thread</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>2GB DDR4 RAM</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>10GB NVMe SSD</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Apache Log4j Exploit Protection</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>TripeOne subdomain</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing-table-cta">
+										<a class="button button-primary button-block" href="/contact">START PLAYING
+											TODAY!</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="pricing-inner section-inner has-top-divider">
+						<div class="pricing-tables-wrap">
+							<div class="pricing-table is-revealing">
+								<div class="pricing-table-inner">
+									<div class="pricing-table-main">
+										<div class="pricing-table-header">
+											<div class="pricing-table-title mt-12 mb-16 text-secondary">Free</div>
+											<div class="pricing-table-price">
+												<span class="pricing-table-price-amount h1">Upcoming
+													Giveaways!</span><span
+													class="pricing-table-price-currency h4"></span>
+											</div>
+											<div class="pricing-table-price mb-24 pb-16 text-right"><span
+													class="pricing-table-price-currency h6">$</span><span
+													class="pricing-table-price-amount h6">0</span></div>
+										</div>
+										<ul class="pricing-table-features list-reset text-xs mb-56">
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Shared Cores</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>4GB DDR4 RAM</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>5GB NVMe SSD</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00A2B8" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Limited Access</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing-table-cta">
+										<a class="button button-primary button-block" href="/discord">Take me to the
+											Discord server</a>
+									</div>
+								</div>
+							</div>
+							<div class="pricing-table is-revealing">
+								<div class="pricing-table-inner">
+									<div class="pricing-table-main">
+										<div class="pricing-table-header">
+											<div class="pricing-table-title mt-12 mb-16 text-primary">Free forever!
+											</div>
+											<div class="pricing-table-price"><span
+													class="pricing-table-price-amount h1">TripeOne X</span></div>
+											<div class="pricing-table-price mb-24 pb-16 text-right"><span
+													class="pricing-table-price-currency h6">$</span><span
+													class="pricing-table-price-amount h6">0</span></div>
+										</div>
+										<ul class="pricing-table-features list-reset text-xs mb-56">
+											<li>
+												<span>Minecraft Multiplayer without the need of an external server!
+													🤯</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>Access to all regions</span>
+											</li>
+											<li>
+												<span class="list-icon">
+													<svg width="16" height="12" xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M14.3.3L5 9.6 1.7 6.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l4 4c.2.2.4.3.7.3.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0z"
+															fill="#00C6A7" fill-rule="nonzero"></path>
+													</svg>
+												</span>
+												<span>10 players</span>
+											</li>
+											<li>
+												<span>Don't believe us? See for yourself!</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing-table-cta">
+										<a class="button button-secondary button-block" href="/x"
+											onclick="plausible(&#39;Check X out&#39;)">Show me the magic!</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<div class="site-footer-inner">
+					<div class="brand footer-brand">
+						<a href="/">
+							<img src="./cynosure/logo.png" style="width: 50px;">
+						</a>
+					</div>
+					<ul class="footer-links list-reset">
+						<li>
+							<a href="/terms">Terms</a>
+						</li>
+						<li>
+							<a href="/privacy">Privacy</a>
+						</li>
+						<li>
+							<a href="/support">Support</a>
+						</li>
+						<li>
+							<a href="/about">About us</a>
+						</li>
+					</ul>
+					<ul class="footer-social-links list-reset">
+						<li>
+							<a href="/discord" class="fa-brands fa-discord">
+								<span class="screen-reader-text">Discord</span>
+							</a>
+						</li>
+						<li>
+							<a href="/instagram" class="fa-brands fa-instagram">
+								<span class="screen-reader-text">Instagram</span>
+							</a>
+						</li>
+						<li>
+							<a href="/youtube" class="fa-brands fa-youtube">
+								<span class="screen-reader-text">Google</span>
+							</a>
+						</li>
+					</ul>
+					<div class="footer-copyright">
+						© 2024 Cynosure, all rights reserved
+						<br>
+						Illustrations by unDraw, inspired by Cruip
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+
+</body>
+<div><template shadowrootmode="closed"><span>
+			<style>
+				:host {
+					display: contents !important
+				}
+
+				:host:before,
+				:host:after {
+					display: none !important
+				}
+
+				.R {
+					all: initial;
+					color: #000;
+					contain: layout style;
+					direction: ltr;
+					font: 12px/1 "Helvetica Neue", Arial, sans-serif;
+					pointer-events: none;
+					position: fixed;
+					user-select: none;
+					z-index: 2147483647
+				}
+
+				.HM {
+					font-weight: bold;
+					position: absolute;
+					white-space: nowrap
+				}
+
+				.DLG::backdrop {
+					background: #0000
+				}
+
+				.LH {
+					background: linear-gradient(#fff785, #ffc542);
+					border: 0.01px solid #e3be23;
+					border-radius: 3px;
+					box-shadow: 0 3px 5px #0000004d;
+					box-sizing: border-box;
+					contain: layout style;
+					overflow: hidden;
+					padding: 2.5px 3px 2px;
+					position: absolute
+				}
+
+				.IH {
+					background: #fff7854d;
+					border: 0.01px solid #c38a22;
+					position: absolute
+				}
+
+				.IHS {
+					background: #f664;
+					border-color: #933
+				}
+
+				.HUD,
+				.TEE {
+					bottom: -1px;
+					font-size: 14px;
+					height: 20px;
+					line-height: 16px;
+					max-width: 336px;
+					min-width: 152px;
+					overflow: hidden;
+					padding: 4px 4px 1px;
+					right: 152px;
+					text-overflow: ellipsis;
+					white-space: nowrap
+				}
+
+				.HUD:after {
+					background: #eee;
+					border-radius: 4px 4px 0 0;
+					border: 0.01px solid #bbb;
+					content: "";
+					position: absolute;
+					z-index: -1
+				}
+
+				.HL {
+					max-width: 60vw;
+					right: -4px;
+					padding-right: 8px
+				}
+
+				.HUD.UI {
+					cursor: text;
+					height: 24px
+				}
+
+				.Find {
+					cursor: text;
+					position: static;
+					width: 100%
+				}
+
+				.Flash {
+					box-shadow: 0 0 4px 2px #4183c4;
+					padding: 1px
+				}
+
+				.AbsF {
+					padding: 0;
+					position: absolute
+				}
+
+				.Sel {
+					box-shadow: 0 0 4px 2px #fa0
+				}
+
+				.Frame {
+					border: 5px solid #ff0
+				}
+
+				.Frame,
+				.DLG,
+				.HUD:after {
+					box-sizing: border-box;
+					height: 100%;
+					left: 0;
+					top: 0;
+					width: 100%
+				}
+
+				.Omnibar {
+					left: calc(10vw - 12px);
+					height: 520px;
+					top: 64px;
+					width: calc(80vw + 24px)
+				}
+
+				.O2 {
+					left: calc(10% - 12px);
+					width: calc(80% + 24px)
+				}
+
+				.BH {
+					color: #902809
+				}
+
+				.MC,
+				.MH {
+					color: #d4ac3a
+				}
+
+				.One {
+					border-color: #fa7
+				}
+
+				.UI,
+				.DLG {
+					color-scheme: light;
+					pointer-events: all
+				}
+
+				.PO {
+					all: initial;
+					left: 0;
+					position: absolute;
+					top: 0
+				}
+
+				.D>.LH {
+					background: linear-gradient(#cb0, #c80)
+				}
+
+				.HUD.D {
+					color: #ccc
+				}
+
+				.HUD.D:after {
+					background: #222
+				}
+
+				@media(forced-colors:active) {
+					.R {
+						border-radius: 0
+					}
+
+					.HM>.LH,
+					.HUD:after {
+						background: #000;
+						border-radius: 0
+					}
+
+					.Flash {
+						outline: 4px solid #fff
+					}
+				}
+
+				/* ^ do not touch this line ^ */
+
+				* {
+					font-family: "Iosevka NF", monospace !important;
+				}
+
+				/* .R,.DHM,.HM,.IHS,.IH,.BH,.MH {
+    color: #F0F;
+} */
+
+				/* link hints */
+				.LH {
+					border: 2px rgba(228, 202, 87, 0.5) solid;
+					background: unset;
+					margin-top: -2px;
+					margin-left: -2px;
+					color: #1f2731;
+					z-index: 0;
+					box-shadow: 0px 2px 11px rgb(0, 0, 0, 0.12);
+				}
+
+				.LH:before {
+					position: absolute;
+					background: rgba(255, 247, 121, 0.95);
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					content: "";
+					z-index: -1;
+				}
+
+				.D .LH {
+					border-color: rgba(0, 0, 0, 0.3);
+					color: #43474d;
+				}
+
+				/* hints matching chars */
+				.MC {
+					color: #cc5200;
+				}
+
+				.D .MC {
+					color: #e92626;
+				}
+
+				/* bottom hud */
+				.HUD {
+					bottom: 1rem;
+					left: 1rem;
+					right: unset;
+					border-radius: 6px;
+					box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+					padding: 0.5rem 1rem;
+					height: 1.5rem !important;
+					line-height: unset;
+					text-transform: lowercase;
+					color: #838686;
+					max-width: 420px;
+					min-width: unset;
+					line-height: 21px;
+					border: 3px rgba(0, 0, 0, 0.08) solid;
+					display: flex;
+					align-items: center;
+				}
+
+				.HUD.UI {
+					min-width: 180px;
+					align-items: unset;
+				}
+
+				.Omnibar {
+					padding-bottom: 20px;
+				}
+
+				.HUD:after {
+					border-radius: unset;
+					border: none;
+					background: rgba(247, 246, 246, 0.9);
+				}
+
+				.HUD.D {
+					border-color: rgba(80, 83, 84, 0.14);
+				}
+
+				.HUD.D:after {
+					background: rgba(10, 14, 20, 0.85);
+				}
+			</style>
+		</span></template></div>
+
+</html>

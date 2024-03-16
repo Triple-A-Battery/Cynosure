@@ -52,7 +52,6 @@ html {
 }
 body {
   color: #111111;
-  background-color: #f6f6f6;
   font-family: sans-serif;
   font-size: 1.3em;
   font-style: normal;
@@ -142,7 +141,7 @@ iframe, textarea, input {
 }
 </style>
 </head>
-<body style="background-color: rgb(246, 246, 246); color: rgb(34, 34, 34); font-family: sans-serif; font-size: 1.3em; line-height: 1.5; writing-mode: unset; max-width: 64ch; height: unset;">
+<body style="color: rgb(34, 34, 34); font-family: sans-serif; font-size: 1.3em; line-height: 1.5; writing-mode: unset; max-width: 64ch; height: unset;">
 	<h1>${title}</h1>
     ${content}
 </body>

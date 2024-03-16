@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&display=swap');
+
+:root {
+	--color0: #282425;
+	--color1: #2e282a;
+	--color2: #e4d8b4;
+	--color3: #ece3ca;
+	--color4: #f8f8f8;
+}
+
+.hero-media img {
+	border-radius: 2px;
+}
+
+/* Icons */
+.feature-icon svg {
+	display: none;
+}
+
+.feature-icon {
+	/*font-size: 48px;*/
+	/*background-color: var(--color3);*/
+	height: 96px;
+	background-size: contain;
+}
+
+.feature-extended-image {
+	/*background: linear-gradient(56deg, var(--color0) 50%, var(--color1) 100%);*/
+	/*border: 1px solid var(--color3);*/
+	padding: 10px;
+}
+
+.feature-extended-image img {
+	/*-webkit-mask: url(/assets/illustrations/hardware.svg) no-repeat center;
+	background-color: var(--color3);*/
+	filter: drop-shadow(2px 2px 1px black);
+}
+
+.list-icon path {
+	/*fill: var(--color3);*/
+}
+
+@media (min-width: 641px) {
+	.site-header::before {
+		height: calc(500px + 100vw/10);
+	}
+}
+
+.boxed-container {
+	max-width: unset;
+}
+
+.site-header::before {
+	background: linear-gradient(56deg, var(--color3) 50%, var(--color2) 100%);
+}
+
+body {
+	color: var(--color4);
+}
+
+g {
+	fill: var(--color1);
+}
+
+footer g {
+	fill: var(--color1);
+}
+
+
+.hero-title span {
+	color: var(--color0);
+}
+
+.header-links a:not(.button) {
+	color: var(--color1);
+}
+
+.hero-media {
+	max-width: 848px;
+	margin: inherit auto;
+	margin-left: auto;
+	margin-right: auto;
+	background: var(--color1);
+}
+
+/*Font Sizes*/
+
+.container-sm {
+	max-width: 1128px;
+}
+
+@media (min-width: 1013px) {
+	.text-light h1 {
+		/*transform: translateX(calc((100vw - 800px) / -2));*/
+		/*width: 100vw;*/
+		font-size: 60px;
+		font-weight: 700;
+		letter-spacing: 0px;
+		line-height: 1.3;
+	}
+}
+
+@keyframes colorgrad {
+	0% {
+		background-position: 100% 0;
+	}
+
+	100% {
+		background-position: 0% 0;
+	}
+}
+
+h1,
+.h1 {
+	font-size: 46px;
+	font-weight: 700;
+	letter-spacing: 0px;
+	line-height: 1.1;
+}
+
+.highlight {
+	background: linear-gradient(56deg, var(--color0) 40%, var(--color1) 50%, var(--color0) 60%);
+	background-size: 300% 100%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: colorgrad 2s 0s infinite linear;
+}
+
+.highlight-s {
+	background: linear-gradient(56deg, var(--color0) 40%, var(--color1) 50%, var(--color0) 60%);
+	background-size: 300% 100%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: colorgrad 2s 0s infinite linear;
+}
+
+p .highlight {
+	background: linear-gradient(56deg, var(--color4) 40%, var(--color3) 50%, var(--color4) 60%);
+	background-size: 300% 100%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: colorgrad 2s 0s infinite linear;
+}
+
+h2,
+.h2 {
+	font-size: 36px;
+	line-height: 46px;
+	letter-spacing: 1px
+}
+
+
+h3,
+.h3,
+blockquote {
+	font-size: 30px;
+	line-height: 40px;
+	letter-spacing: 1px
+}
+
+h4,
+h5,
+h6,
+.h4,
+.h5,
+.h6 {
+	font-size: 20px;
+	line-height: 30px;
+	letter-spacing: 1px
+}
+
+@media (max-width: 640px) {
+	.h1-mobile {
+		font-size: 36px;
+		line-height: 46px;
+		letter-spacing: -0.2px
+	}
+
+	.h2-mobile {
+		font-size: 40px;
+		font-weight: 700;
+		letter-spacing: 0px;
+		line-height: 43px;
+	}
+
+	.h3-mobile {
+		font-size: 20px;
+		line-height: 30px;
+		letter-spacing: -0.1px
+	}
+
+	.h4-mobile,
+	.h5-mobile,
+	.h6-mobile {
+		font-size: 18px;
+		line-height: 27px;
+		letter-spacing: -0.1px
+	}
+}
+
+
+
+/*********/
+
+.header-links a:not(.button):hover,
+.header-links a:not(.button):active {
+	color: var(--color0)
+}
+
+.text-light h1,
+.text-light h2,
+.text-light h3,
+.text-light h4,
+.text-light h5,
+.text-light h6,
+.text-light .h1,
+.text-light .h2,
+.text-light .h3,
+.text-light .h4,
+.text-light .h5,
+.text-light .h6,
+.text-light p {
+	color: var(--color0) !important;
+}
+
+main {
+	background: linear-gradient(57deg, var(--color0) 0%, var(--color1) 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	color: var(--color3);
+	font-family: 'Lato', sans-serif;
+	/*text-transform: uppercase;*/
+}
+
+/*Why us and features*/
+.feature-inner {
+	box-shadow: 0 16px 48px var(--color0);
+	border: 1px solid var(--color3);
+	background: var(--color0);
+	mix-blend-mode: unset;
+	transition: .3s;
+}
+
+.feature-inner:hover {
+	border: 1px solid var(--color3);
+	transform: translateY(-5px);
+}
+
+.feature-inner::before {
+	content: unset;
+}
+
+/*Pricing*/
+span.pricing-table-price-amount.h1 {
+	/*font-family: 'Inter';*/
+	font-family: 'Lato';
+	font-weight: 400;
+}
+
+.pricing-table-features {
+	color: var(--color3);
+}
+
+.pricing-table-inner {
+	/*Keeping border as box-shadow for future blurring*/
+	box-shadow: 0px 0px 0px 1px var(--color3);
+	background: var(--color0);
+	mix-blend-mode: unset;
+	transition: .3s;
+}
+
+.pricing-tables-wrap div:nth-child(2) .pricing-table-inner {
+	box-shadow: 0px 0px 0px 5px var(--color3);
+	transform: scale(1.05);
+}
+
+.pricing-table-inner:hover {
+	/*Keeping border as box-shadow for future blurring*/
+	box-shadow: 0px 0px 0px 3px var(--color3);
+	transform: scale(1.01) translateY(-5px);
+}
+
+.pricing-table-inner::before {
+	content: unset;
+}
+
+.pricing-table-inner .h3,
+.pricing-table-inner .h3~* {
+	color: var(--color3);
+}
+
+.pricing-table-inner::before {
+	content: unset;
+}
+
+.text-primary {
+	color: var(--color2);
+}
+
+.text-secondary {
+	color: var(--color3);
+}
+
+/*Buttons*/
+.button-secondary {
+	color: var(--color4) !important;
+	/*background-image: linear-gradient(56deg, var(--color3) 20%, var(--color2) 50%, var(--color3) 80%) !important;*/
+	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 60%) !important;
+	background-size: 300% 100%;
+	transition: .4s;
+	border: 1px solid var(--color3);
+}
+
+.button-secondary:hover {
+	color: var(--color0) !important;
+	background-position: 100% 0;
+	background-size: 300% 100%;
+	transition: .4s;
+}
+
+.button-sm {
+	color: var(--color4) !important;
+	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 60%) !important;
+	background-size: 300% 100%;
+	transition: .4s;
+}
+
+.button-sm:hover {
+	color: var(--color0) !important;
+	background-position: 100% 0;
+	background-size: 300% 100%;
+	transition: .4s;
+}
+
+.button-primary {
+	color: var(--color4) !important;
+	background-image: linear-gradient(56deg, var(--color0) -25%, var(--color1) 50%, var(--color3) 80%) !important;
+	background-size: 300% 100%;
+	transition: .4s;
+}
+
+.button-primary:hover {
+	color: var(--color0) !important;
+	background-position: 100% 0;
+	background-size: 300% 100%;
+	transition: .4s;
+}
+
+/*mailing*/
+.mailing {
+	background: linear-gradient(56deg, var(--color3) 50%, var(--color2) 100%);
+	padding: 80px 40px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-around;
+	border-radius: 2px;
+	margin: auto;
+}
+
+.mailing * {
+	color: var(--color0);
+}
+
+.mailing h2 {
+	margin: 0;
+	width: 50%;
+}
+
+.mailing form {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 25%;
+	min-width: 250px;
+}
+
+.mailing input {
+	border: 1px solid var(--color1);
+	color: var(--color3);
+	background: linear-gradient(56deg, var(--color0) -25%, var(--color1) 200%);
+	border-radius: 2px;
+	font-size: 14px;
+	padding: 12px 16px;
+	line-height: 0;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.mailing input:focus-visible {
+	/*border: 1px solid var(--color3);*/
+	outline: unset;
+}
+
+.mailing button {
+	position: absolute;
+	top: 15%;
+	right: 0;
+	background: transparent;
+	border: none;
+	padding-right: 12px;
+	cursor: pointer;
+}
+
+.mailing button svg {
+	width: 12px;
+	height: 12px;
+	overflow: unset;
+	fill: var(--color3);
+}
+
+.mailing form p {
+	position: absolute;
+	bottom: auto;
+	top: 100px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 25px;
+}
+
+@media (max-aspect-ratio: 1/1) {
+	.mailing h2 {
+		width: 80%;
+		margin-bottom: 30px;
+	}
+}
+
+/*footer*/
+.pricing::before {
+	content: unset;
+}
+
+.site-footer {
+	background: linear-gradient(56deg, var(--color3) 50%, var(--color2) 100%);
+	;
+	border: none;
+	color: var(--color1);
+}
+
+.site-footer a {
+	color: var(--color1);
+}
+
+.site-footer a:hover {
+	text-decoration: none;
+}
+
+.site-footer .fa-brands {
+	font-size: 24px;
+}
+
+.dark {
+	background: linear-gradient(57deg, var(--color0) 0%, var(--color1) 100%);
+	color: var(--color3);
+}
