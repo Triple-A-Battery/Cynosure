@@ -57,7 +57,16 @@ ${document.body.innerText}`);
 			document.getElementById('cynosure-summarizerPopup').remove();
 		};
 		asd.onclick = () => {
-			document.getElementById(summarizer.popupID).innerHTML = summarizer.summary;
+			if (document.querySelector('#cynosure-summ')) {
+				document.querySelector('#cynosure-summ').remove();
+			} else {
+				let ne = document.createElement('div');
+				let p = document.createElement('p');
+				p.innerText = summarizer.summary;
+				ne.appendChild(p);
+				ne.id = 'cynosure-summ';
+				document.body.appendChild(ne);
+			}
 		};
 		asd.innerHTML = `
 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
