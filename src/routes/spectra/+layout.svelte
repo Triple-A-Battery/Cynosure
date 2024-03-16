@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Footer from '$lib/components/Footer.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
+	import Loading from '$lib/components/Loading.svelte';
 
 	import Login from '$lib/components/Login.svelte';
 	import Signup from '$lib/components/Signup.svelte';
@@ -10,6 +11,7 @@
 	import supabase from '$lib/supabase';
 
 	let login = true;
+	let loading = true;
 
 	function signUp() {
 		login = false;
@@ -26,6 +28,7 @@
 			let user_data = await supabase.from('Users').select('*').eq('id', data.user.id).single();
 			$user = user_data.data;
 		}
+		loading = false;
 	});
 </script>
 
@@ -33,7 +36,7 @@
 	<section class="min-h-screen m-auto flex flex-col">
 		<div class="flex">
 			<Navbar></Navbar>
-			<div class="h-full w-full flex flex-col ml-[18%]">
+			<div class="h-screen w-full flex flex-col ml-[18%]">
 				<div class="h-full flex-grow">
 					<slot />
 				</div>
@@ -43,16 +46,18 @@
 	</section>
 </main>
 
-{#if !$user.id}
-	<div
-		class="absolute z-10 bg-foreground bg-opacity-50 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center"
-	>
-		<div class="w-full">
-			{#if login}
-				<Login on:signup={signUp}></Login>
-			{:else}
-				<Signup on:login={logIn}></Signup>
-			{/if}
+<Loading {loading}>
+	{#if !$user.id}
+		<div
+			class="absolute z-10 bg-foreground bg-opacity-50 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center"
+		>
+			<div class="w-full">
+				{#if login}
+					<Login on:signup={signUp}></Login>
+				{:else}
+					<Signup on:login={logIn}></Signup>
+				{/if}
+			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</Loading>
