@@ -3,6 +3,7 @@ import { cosineSimilarity, getEmbedding } from '$lib/embedding';
 import { injectComponent } from '$lib/helper';
 import { saveStat } from './stats';
 
+let popup;
 let taskFocus = {
 	name: 'taskFocus',
 	description: 'Distraction check',
@@ -26,6 +27,8 @@ let taskFocus = {
 				taskFocus.popupID,
 				taskFocus.popupHTML(Math.round(taskFocus.relevance * 100))
 			);
+		} else {
+			document.querySelector('#cynosure-warn-offtopic')?.remove();
 		}
 
 		console.log(taskFocus.relevance);
@@ -37,13 +40,14 @@ let taskFocus = {
 			taskFocus.feature();
 		});
 	},
-	popupID: 'cynosure-warn',
-	popupHTML: (relevance: Number) => {
-		return `
-<!--<p>This task matches only ${relevance}% with your main task</p>-->
-<p>You seem to be deviating from your task.</p>
-<p>You might want to get back!</p>
-		`;
+	popupID: 'cynosure-warn-offtopic',
+	popupHTML: () => {
+		popup = document.createElement('p');
+		popup.innerText = 'This does not match your main task';
+		popup.onclick = () => {
+			document.getElementById('cynosure-warn-offtopic').remove();
+		};
+		return popup;
 	}
 };
 
