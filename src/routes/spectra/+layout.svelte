@@ -47,7 +47,7 @@
 		</div>
 	{:else}
 		<main class="bg-background text-foreground">
-			<section class="w-[80%] mx-auto m-auto h-screen flex flex-col">
+			<section class="w-[80%] bg-background mx-auto m-auto min-h-screen flex flex-col">
 				<Navbar></Navbar>
 				<div class="flex-grow">
 					<slot />
