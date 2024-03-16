@@ -27,19 +27,22 @@
 		if (data.user) {
 			let user_data = await supabase.from('Users').select('*').eq('id', data.user.id).single();
 			$user = user_data.data;
-			console.log($user);
 		}
 		loading = false;
 	});
 </script>
 
 <main class="bg-background text-foreground">
-	<section class="max-w-7xl min-h-[100vh] m-auto flex flex-col">
-		<Navbar></Navbar>
-		<div class="flex-grow px-4">
-			<slot />
+	<section class="min-h-screen m-auto flex flex-col">
+		<div class="flex">
+			<Navbar></Navbar>
+			<div class="h-full w-full flex flex-col ml-[18%]">
+				<div class="h-full flex-grow">
+					<slot />
+				</div>
+				<Footer></Footer>
+			</div>
 		</div>
-		<Footer></Footer>
 	</section>
 </main>
 
