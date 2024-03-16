@@ -28,6 +28,7 @@
 			<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
 			<a class="btn btn-secondary w-full" href="/stats.html">Statistics</a>
 		</div>
+		<a class="btn btn-secondary w-full" href="/spectra_ADD.html">Spectra</a>
 	</div>
 </Extension>
 
