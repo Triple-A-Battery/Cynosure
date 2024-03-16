@@ -43,6 +43,13 @@
 		set('task', t);
 		set('taskEmbedding', embedding);
 	}
+
+	async function remove(e) {
+		let category = e.target.getAttribute('category');
+		let index = e.target.getAttribute('index');
+		tasks[category].splice(index, 1);
+		chrome.storage.local.set({ tasks });
+	}
 </script>
 
 <div class="max-w-2xl h-screen m-auto">
@@ -67,8 +74,10 @@
 				>
 					<h1 class="bg-yellow-100 w-full text-3xl bold">{category}</h1>
 					<ol class="text-lg font-normal leading-loose tracking-tight">
-						{#each tasks[category] as task}
-							<li class="cursor-pointer" on:click={save}>{task}</li>
+						{#each tasks[category] as task, i}
+							<li class="cursor-pointer" on:click={save} on:dblclick={remove} {category} index={i}>
+								{task}
+							</li>
 						{/each}
 					</ol>
 					<form class="space-y-3" on:submit|preventDefault={addTask}>
@@ -81,3 +90,4 @@
 		</div>
 	</div>
 </div>
+
