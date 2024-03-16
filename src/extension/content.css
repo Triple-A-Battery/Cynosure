@@ -2,25 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-div[id^='cynosure-'] {
+div#cynosure-warn {
 	position: fixed;
-	top: 25px;
-	right: 25px;
-	/* background: red; */
-	color: black;
-	font-size: 16px;
+	top: 10vh;
+	right: 10vh;
+	padding: 1rem 1rem 1rem 1rem;
+	border: 1px;
+	@apply text-foreground;
+	@apply bg-background;
+	@apply border-red;
 	z-index: 100000;
 }
 
 div#cynosure-summarizerPopup {
 	position: fixed;
-	top: 25px;
-	right: 25px;
-	/* background: peachpuff; */
-	color: black;
+	top: 10vh;
+	right: 0px;
 	font-size: 16px;
 	z-index: 100000;
 	width: 386px;
 	height: auto;
 	@apply bg-white;
+	@apply text-background;
+}
+div#cynosure-zen {
+	position: fixed;
+	bottom: 10vh;
+	border: 0;
+	width: 60px;
+	border-radius: 30px;
+	right: -30px;
+	display: flex;
+	align-content: center;
+	padding: 6px 6px 6px 6px;
+	z-index: 100000;
+	@apply bg-accent;
+}
+
+div#cynosure-zen a {
+	display: inline-block;
+	height: 24px;
+	width: 100%;
+	@apply: text-foreground;
+}
+
+div#cynosure-zen svg {
+	height: 24px;
 }

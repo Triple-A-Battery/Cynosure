@@ -23,7 +23,7 @@ const ifs = {
 			ifs.feature(e);
 		});
 	},
-	popupID: 'cynosure-ifsPopup',
+	popupID: 'cynosure-warn',
 	popupHTML: () => {
 		return `
 <p>You seem to love to scroll, but are you sure its want you to be doing?</p>

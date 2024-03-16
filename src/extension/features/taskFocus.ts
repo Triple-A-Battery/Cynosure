@@ -20,9 +20,12 @@ let taskFocus = {
 
 		let stats = await get('stats');
 
-		saveStat(taskFocus.relevance)
+		saveStat(taskFocus.relevance);
 		if (taskFocus.relevance < 0.55) {
-			injectComponent(taskFocus.popupID, taskFocus.popupHTML(Math.round(taskFocus.relevance * 100)));
+			injectComponent(
+				taskFocus.popupID,
+				taskFocus.popupHTML(Math.round(taskFocus.relevance * 100))
+			);
 		}
 
 		console.log(taskFocus.relevance);
@@ -34,7 +37,7 @@ let taskFocus = {
 			taskFocus.feature();
 		});
 	},
-	popupID: 'cynosure-taskFocus',
+	popupID: 'cynosure-warn',
 	popupHTML: (relevance: Number) => {
 		return `
 <!--<p>This task matches only ${relevance}% with your main task</p>-->

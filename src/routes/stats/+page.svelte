@@ -25,8 +25,17 @@
 </script>
 
 <Extension>
-	<p class="text-xl">Stats</p>
-	<p>Total websites visited: {focusTime + unFocusTime}</p>
-	<p>Times gone of track: {unFocusTime}</p>
-	<p>% of productive websites: {(focusTime / (unFocusTime + focusTime)) * 100}</p>
+	<div class="flex flex-col">
+		<p class="text-xl text-center">Statistics</p>
+		<p class="text-[1rem]">Total websites visited: {focusTime + unFocusTime}</p>
+		<p class="text-[1rem]">Times gone of track: {unFocusTime}</p>
+		<p class="text-[1rem]">
+			% of productive websites: {(focusTime / (unFocusTime + focusTime)) * 100}
+		</p>
+	</div>
+	<div class="grid grid-cols-3 justify-between gap-x-3 mt-3">
+		<a class="btn btn-secondary w-full" href="/options.html">Options</a>
+		<a class="btn btn-secondary w-full" href="/memory.html">Memory</a>
+		<a class="btn btn-primary w-full" href="/">Back</a>
+	</div>
 </Extension>
