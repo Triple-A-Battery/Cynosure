@@ -12,12 +12,13 @@ export default {
 				foreground: '#1A1A1A'
 			},
 			fontFamily: {
-				sans: ['"Jost*"']
+				sans: ['"Jost"'],
+				serif: ['"Jost"']
 			}
 		}
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
-		themes: ["retro"],
-	},
+		themes: ['retro']
+	}
 };

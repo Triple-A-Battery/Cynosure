@@ -10,7 +10,6 @@
 		<div class="flex flex-row justify-between space-x-6">
 			<List />
 			<List />
-			<List />
 		</div>
 	</div>
 </div>

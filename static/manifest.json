@@ -13,7 +13,13 @@
 	"chrome_url_overrides": {
 		"newtab": "startpage.html"
 	},
-	"permissions": ["storage", "unlimitedStorage"],
+	"web_accessible_resources": [
+		{
+			"resources": ["*"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"permissions": ["storage", "unlimitedStorage", "activeTab"],
 	"content_scripts": [
 		{
 			"//all_frames": true,
