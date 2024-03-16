@@ -6,13 +6,19 @@
 	let taskTitle: string;
 	let taskDescription: string;
 
+	let name: string;
+	let empCode: string;
+
 	let organizations = [];
+	let employees = [];
+
+	let addEmpClicked = false;
 
 	onMount(async () => {
 		let { data, error } = await supabase
 			.from('UserOrganizationRelations')
 			.select()
-			.eq('user_id', $user['id']);
+			.eq('user_id', $user.id);
 
 		if (data !== null) {
 			for (let i = 0; i < data.length; i++) {
@@ -22,14 +28,31 @@
 					.eq('id', data[i]['org_id'])
 					.single();
 
-				organizations = [
-					...organizations,
-					{ name: org_data['data']['name'], id: data[i]['org_id'] }
-				];
-				console.log(org_data);
+				organizations.push({ name: org_data['data']['name'], id: data[i]['org_id'] });
+				organizations = [...organizations];
 			}
 		}
+
+		console.log($user.sessionOrgId);
+		console.log(user_data);
 	});
+
+	const addUserToOrg = async () => {
+		let { data, error } = await supabase.from('Users').select().eq('id', empCode).single();
+
+		if (error) {
+			alert('user doesnt exist');
+		} else {
+			let exec = await supabase
+				.from('UserOrganizationRelations')
+				.insert([{ org_id: $user.sessionOrgId, user_id: empCode }]);
+
+			employees.push({ name: data.name, email: data.email, id: data.id, role: data.role });
+			employees = [...employees];
+
+			addEmpClicked = false;
+		}
+	};
 
 	const addTask = async () => {
 		const { data, error } = await supabase
@@ -53,7 +76,8 @@
 
 			$user = { ...$user, sessionOrgId: data['id'] };
 
-			organizations = [...organizations, { name: name, id: data[i]['org_id'] }];
+			organizations.push({ name: name, id: data['id'] });
+			organizations = [...organizations];
 		}
 
 		return { data, error };
@@ -153,6 +177,7 @@
 							id="name"
 							class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
 							placeholder="cynosure"
+							bind:value={name}
 						/>
 					</div>
 					<div class="flex items-center justify-center mt-2 mb-1">
@@ -175,8 +200,40 @@
 											<div class="text-background font-semibold">{org['name']}</div>
 										</div>
 										<div class="collapse-content ml-auto">
-											<div class="bg-accent text-foreground p-1 text-sm rounded-lg">
+											<div
+												class="bg-accent text-foreground p-1 text-sm rounded-lg flex flex-col gap-2"
+											>
 												Code: {org['id']}
+												<button
+													class="text-background bg-foreground p-2 rounded-lg"
+													on:click|preventDefault={async () => {
+														$user.sessionOrgId = org.id;
+
+														const { data, error } = await supabase
+															.from('UserOrganizationRelations')
+															.select()
+															.eq('org_id', $user.sessionOrgId);
+
+														if (!error) {
+															for (let i = 0; i < data.length; i++) {
+																const userData = await supabase
+																	.from('Users')
+																	.select()
+																	.eq('id', data[i].user_id)
+																	.single();
+
+																employees.push({
+																	name: userData.data.name,
+																	email: userData.data.email,
+																	id: userData.data.id,
+																	role: userData.data.role
+																});
+
+																employees = [...employees];
+															}
+														}
+													}}>select</button
+												>
 											</div>
 										</div>
 									</div>
@@ -214,50 +271,61 @@
 		</div>
 	</div>
 	<div>
-		<div class="text-2xl my-4 font-semibold">Employee Details</div>
+		<div class="text-2xl my-4 font-semibold flex justify-between">
+			<div>Employee Details</div>
+			<div>
+				<button
+					class="bg-accent text-foreground p-2 px-4 rounded-lg"
+					on:click={() => {
+						addEmpClicked = true;
+					}}>+</button
+				>
+			</div>
+		</div>
+		{#if addEmpClicked}
+			<div class="w-fit rounded-lg bg-foreground p-8 text-background">
+				<form class="flex flex-col gap-4" on:submit|preventDefault={addUserToOrg}>
+					<label for="code" class="text-md">employee code</label>
+					<input
+						type="text"
+						name="code"
+						id="code"
+						class="bg-gray-50 border border-gray-300 text-foreground rounded-lg focus:border-foreground block w-full p-2"
+						placeholder="xxx-yyy-zzz"
+						bind:value={empCode}
+					/>
+
+					<div class="flex items-center justify-center p-1">
+						<button class="bg-accent text-foreground p-2 w-full rounded-lg" type="submit">
+							<span>add employee</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		{/if}
 		<div class="min-w-[95%] mx-auto flex flex-col gap-4">
-			<div class="collapse bg-foreground text-foreground bg-opacity-100">
-				<input type="radio" name="my-accordion-2" />
-				<div class="collapse-title text-xl font-medium flex justify-between items-center">
-					<div class="text-background">Employee 1</div>
-					<div class="flex gap-4">
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 1</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 2</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 3</div>
+			{#if employees.length === 0}
+				<div class="w-full text-center font-semibold">No employees in organization</div>
+			{:else}
+				{#each employees as employee}
+					<div class="collapse bg-foreground text-foreground bg-opacity-100">
+						<input type="radio" name="my-accordion-2" />
+						<div class="collapse-title text-xl font-medium flex justify-between items-center">
+							<div class="text-background">{employee.name}</div>
+							<div class="flex gap-4">
+								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 1</div>
+								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 2</div>
+								<div class="bg-accent text-foreground p-2 rounded-lg font-normal">Task 3</div>
+							</div>
+						</div>
+						<div class="collapse-content flex w-fit">
+							<div class="bg-accent text-foreground p-1 text-sm rounded-lg flex flex-col gap-2">
+								Code: {employee.id}
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="collapse-content">
-					<p>hello</p>
-				</div>
-			</div>
-			<div class="collapse bg-foreground text-foreground bg-opacity-100">
-				<input type="radio" name="my-accordion-2" />
-				<div class="collapse-title text-xl font-medium flex justify-between items-center">
-					<div class="text-background">Employee 1</div>
-					<div class="flex gap-4">
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 1</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 2</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 3</div>
-					</div>
-				</div>
-				<div class="collapse-content">
-					<p>hello</p>
-				</div>
-			</div>
-			<div class="collapse bg-foreground text-foreground bg-opacity-100">
-				<input type="radio" name="my-accordion-2" />
-				<div class="collapse-title text-xl font-medium flex justify-between items-center">
-					<div class="text-background">Employee 1</div>
-					<div class="flex gap-4">
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 1</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 2</div>
-						<div class="bg-accent text-foreground p-2 rounded-lg">Task 3</div>
-					</div>
-				</div>
-				<div class="collapse-content">
-					<p>hello</p>
-				</div>
-			</div>
+				{/each}
+			{/if}
 		</div>
 	</div>
 </section>

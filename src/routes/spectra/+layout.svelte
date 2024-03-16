@@ -32,16 +32,6 @@
 	});
 </script>
 
-<main class="bg-background text-foreground">
-	<section class="w-[80%] mx-auto m-auto flex flex-col">
-		<Navbar></Navbar>
-		<div class="flex-grow">
-			<slot />
-		</div>
-		<Footer></Footer>
-	</section>
-</main>
-
 <Loading {loading}>
 	{#if !$user.id}
 		<div
@@ -55,5 +45,15 @@
 				{/if}
 			</div>
 		</div>
+	{:else}
+		<main class="bg-background text-foreground">
+			<section class="w-[80%] mx-auto m-auto h-screen flex flex-col">
+				<Navbar></Navbar>
+				<div class="flex-grow">
+					<slot />
+				</div>
+				<Footer></Footer>
+			</section>
+		</main>
 	{/if}
 </Loading>
