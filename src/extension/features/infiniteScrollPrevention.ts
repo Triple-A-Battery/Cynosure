@@ -1,5 +1,6 @@
 import { injectComponent } from '$lib/helper';
 
+let popup;
 const ifs = {
 	name: 'infiniteScrollPrevention',
 	description: 'Infinite scroll prevention',
@@ -13,7 +14,7 @@ const ifs = {
 		}
 
 		ifs.previousScroll = e.target.scrollingElement.scrollTop;
-		if (ifs.scrollAmount > 15000) {
+		if (ifs.scrollAmount > 5000) {
 			injectComponent(ifs.popupID, ifs.popupHTML());
 			ifs.scrollAmount = 0;
 		}
@@ -23,12 +24,14 @@ const ifs = {
 			ifs.feature(e);
 		});
 	},
-	popupID: 'cynosure-warn',
+	popupID: 'cynosure-warn-infinite',
 	popupHTML: () => {
-		return `
-<p>You seem to love to scroll, but are you sure its want you to be doing?</p>
-<p>You might want to get focused by searching more specifically!</p>
-		`;
+		popup = document.createElement('p');
+		popup.innerText = 'Stop scrolling. Get back to work.';
+		popup.onclick = () => {
+			document.getElementById('cynosure-warn-infinite').remove();
+		};
+		return popup;
 	}
 };
 

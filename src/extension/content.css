@@ -1,29 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-div#cynosure-warn {
-	position: fixed;
-	top: 10vh;
-	right: 10vh;
-	padding: 1rem 1rem 1rem 1rem;
-	border: 1px;
+div[id^='cynosure-'] {
+	font-size: 16px;
+	font-family: 'Jost', sans-serif;
+	z-index: 100000;
+	@apply border-2;
+	@apply p-4;
+	@apply rounded-md;
 	@apply text-foreground;
 	@apply bg-background;
+}
+
+div#cynosure-warn-offtopic {
+	position: fixed;
+	top: 5vh;
+	right: 5vh;
 	@apply border-red;
-	z-index: 100000;
+}
+
+div#cynosure-warn-infinite {
+	position: fixed;
+	top: 5vh;
+	right: 5vh;
+	@apply border-red;
 }
 
 div#cynosure-summarizerPopup {
 	position: fixed;
-	top: 10vh;
-	right: 0px;
-	font-size: 16px;
+	bottom: 15vh;
+	border: 0;
+	width: 60px;
+	border-radius: 30px;
+	right: -30px;
+	display: flex;
+	align-content: center;
+	padding: 6px 6px 6px 6px;
 	z-index: 100000;
-	width: 386px;
-	height: auto;
-	@apply bg-white;
-	@apply text-background;
+	font-size: 16px;
+	@apply bg-primary;
+}
+
+div#cynosure-summarizerPopup a {
+	display: inline-block;
+	height: 24px;
+	width: 100%;
+	@apply: text-foreground;
+}
+
+div#cynosure-summarizerPopup svg {
+	height: 24px;
 }
 div#cynosure-zen {
 	position: fixed;
@@ -36,6 +64,7 @@ div#cynosure-zen {
 	align-content: center;
 	padding: 6px 6px 6px 6px;
 	z-index: 100000;
+	font-size: 16px;
 	@apply bg-accent;
 }
 
