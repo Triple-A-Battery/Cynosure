@@ -13,7 +13,7 @@
 		if (error) {
 			console.error(error);
 		} else {
-			enabled = true;
+			enabled = id;
 			chrome.storage.local.set({ spectra: id });
 		}
 	}
@@ -28,7 +28,7 @@
 	<Loading {loading}>
 		<div class="space-y-3">
 			{#if !enabled}
-				<button class="btn btn-neutral w-full" on:click={enableSpectra}>Enable spectra</button>
+				<button class="btn btn-neutral w-full" on:click={enableSpectra}>Enable Spectra</button>
 			{:else}
 				<p class="text-xl">Your client ID:</p>
 				<p class="text-xl">{enabled}</p>
