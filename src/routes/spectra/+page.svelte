@@ -12,7 +12,73 @@
 	let organizations = [];
 	let employees = [];
 
+	let weekly = 0;
+	let monthly = 0;
+
 	let addEmpClicked = false;
+
+	async function getWeekly() {
+		const today = new Date();
+		const lastWeekStart = new Date(today);
+		lastWeekStart.setDate(today.getDate() - 7);
+		const lastWeekEnd = new Date(today);
+
+		const dateString1 = lastWeekStart.toISOString().split('T')[0];
+		const dateString2 = lastWeekEnd.toISOString().split('T')[0];
+
+		const { data, error } = await supabase
+			.from('Stats')
+			.select('*')
+			.lt('created_at', dateString2.concat('T23:59:59.999Z')) // Set end time to last millisecond of Sunday
+			.gt('created_at', dateString1);
+
+		if (error) {
+			console.error('Error fetching data:', error);
+		} else {
+			console.log('Data from last week:', data);
+			let productiveCount = 0;
+			let unproductiveCount = 0;
+			for (let i of data) {
+				if (i.relevance > 0.55) {
+					productiveCount++;
+				} else {
+					unproductiveCount++;
+				}
+			}
+			weekly = Math.round((productiveCount / (productiveCount + unproductiveCount)) * 100);
+		}
+	}
+
+	async function getMonthly() {
+		const today = new Date();
+		const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+		const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Set to last day of the month
+
+		const dateString1 = firstDayOfMonth.toISOString().split('T')[0];
+		const dateString2 = lastDayOfMonth.toISOString().split('T')[0].concat('T23:59:59.999Z'); // Include last millisecond of last day
+
+		const { data, error } = await supabase
+			.from('Stats')
+			.select('*')
+			.lt('created_at', dateString2)
+			.gt('created_at', dateString1);
+
+		if (error) {
+			console.error('Error fetching data:', error);
+		} else {
+			console.log('Data from this month:', data);
+			let productiveCount = 0;
+			let unproductiveCount = 0;
+			for (let i of data) {
+				if (i.relevance > 0.55) {
+					productiveCount++;
+				} else {
+					unproductiveCount++;
+				}
+			}
+			monthly = Math.round((productiveCount / (productiveCount + unproductiveCount)) * 100);
+		}
+	}
 
 	onMount(async () => {
 		let { data, error } = await supabase
@@ -34,7 +100,9 @@
 		}
 
 		console.log($user.sessionOrgId);
-		console.log(user_data);
+		// console.log(user_data);
+		getWeekly();
+		getMonthly();
 	});
 
 	const addUserToOrg = async () => {
@@ -249,23 +317,23 @@
 
 		<div class="flex bg-foreground bg-opacity-5 rounded-xl">
 			<div class="p-5">
-				<div class="text-foreground text-2xl font-semibold text-center mb-4">Weekly</div>
+				<div class="text-foreground text-2xl font-semibold text-center mb-4">Monthly</div>
 				<div
 					class="radial-progress bg-background text-4xl text-foreground border-4 border-background"
-					style="--value:70; --size: 14rem;"
+					style="--value:{monthly}; --size: 14rem;"
 					role="progressbar"
 				>
-					70%
+					{monthly}%
 				</div>
 			</div>
 			<div class="p-5">
-				<div class="text-foreground text-2xl font-semibold text-center mb-4">Daily</div>
+				<div class="text-foreground text-2xl font-semibold text-center mb-4">Weekly</div>
 				<div
 					class="radial-progress bg-background text-4xl text-foreground border-4 border-background"
-					style="--value:70; --size: 14rem;"
+					style="--value:{weekly}; --size: 14rem;"
 					role="progressbar"
 				>
-					70%
+					{weekly}%
 				</div>
 			</div>
 		</div>

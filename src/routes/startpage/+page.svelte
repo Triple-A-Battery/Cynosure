@@ -3,6 +3,7 @@
 
 	import { getEmbedding } from '$lib/embedding';
 	import { get, set } from '$lib/storage';
+	import supabase from '$lib/supabase';
 
 	let tasks = {
 		Academics: [],
@@ -13,6 +14,16 @@
 	let focusedTask = '';
 
 	onMount(async () => {
+		let id = (await chrome.storage.local.get(['spectra'])).spectra;
+
+		let { data } = await supabase.from('Tasks').select('*').eq('user_id', id);
+
+		if (data) {
+			for (var i of data) {
+				tasks['Work'].push(i.task);
+			}
+		}
+
 		let storedTasks = { ...tasks, ...(await chrome.storage.local.get('tasks')).tasks };
 		if (!storedTasks) {
 			await chrome.storage.local.set({ tasks: storedTasks });
@@ -90,4 +101,3 @@
 		</div>
 	</div>
 </div>
-
