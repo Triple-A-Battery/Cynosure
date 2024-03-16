@@ -27,7 +27,20 @@ const summarizer = {
 		if (summarizer.currentURL == url) return;
 		if (location.href.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/watch\?v=/)) {
 			let transcript = await summarizer.fetchTranscript(url);
-			summarizer.summary = await summarize(transcript);
+			summarizer.summary = await summarize(`
+Summarize the following video, do not add any headings, just output the summary in one SINGLE paragraph.
+
+The video:
+
+${transcript}`);
+			injectComponent(summarizer.popupID, summarizer.popupHTML());
+		} else {
+			summarizer.summary = await summarize(`
+Summarize the following webpage, do not add any headings, just output the summary in one SINGLE paragraph.
+
+The video:
+
+${document.body.innerText}`);
 			injectComponent(summarizer.popupID, summarizer.popupHTML());
 		}
 	},
