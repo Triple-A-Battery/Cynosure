@@ -7,7 +7,7 @@ export async function POST({ request }) {
 	if (!tasks) return new Response();
 
 	const embeddingModel = await FlagEmbedding.init({
-		model: EmbeddingModel.BGEBaseEN
+		model: EmbeddingModel.BGESmallENV15
 	});
 
 	const embeddings = embeddingModel.embed(tasks);

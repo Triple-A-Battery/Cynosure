@@ -191,19 +191,24 @@
 			for (let i = 0; i < data.length; i++) {
 				let taskRelation = await supabase
 					.from('UserTaskRelations')
-					.select()
+					.select(
+						`
+						*,
+						user_id(*)
+					`
+					)
 					.eq('user_id', data[i].user_id);
 
 				for (let j = 0; j < taskRelation.data.length; j++) {
 					if (taskRelation.data[j].active) {
 						let taskTitle = await supabase
 							.from('Tasks')
-							.select()
+							.select('*')
 							.eq('id', taskRelation.data[j].task_id)
 							.single();
 
 						let taskToAdd = {
-							emp_id: data[i].user_id,
+							emp_id: taskRelation.data[j].user_id.name,
 							title: taskTitle.data.title,
 							taskId: taskRelation.data[j].task_id,
 							active: taskRelation.data[j].active
@@ -341,66 +346,55 @@
 								<span class="w-full text-center font-semibold">not part of any right now</span>
 							{:else}
 								{#each organizations as org}
-									<div transition:slide class="collapse bg-foreground text-foreground">
-										<input type="radio" name="my-accordion-2" />
-										<div
-											class="collapse-title text-md font-medium flex justify-between items-center"
-										>
-											<div class="text-background font-semibold">{org['name']}</div>
-										</div>
-										<div class="collapse-content ml-auto">
-											<div
-												class="bg-accent text-foreground p-1 text-sm rounded-lg flex flex-col gap-2"
-											>
-												Code: {org['id']}
-												<button
-													class="text-background bg-foreground p-2 rounded-lg"
-													on:click|preventDefault={async () => {
-														if ($user.sessionOrgId === org.id) {
-															return;
-														}
-														if (employees.length !== 0) {
-															employees = [];
-														}
+									<div transition:slide class="px-3 py-5 rounded-lg bg-foreground text-foreground">
+										<button
+											class="text-background font-semibold"
+											on:click|preventDefault={async () => {
+												if ($user.sessionOrgId === org.id) {
+													return;
+												}
+												if (employees.length !== 0) {
+													employees = [];
+												}
 
-														$user.sessionOrgId = org.id;
+												$user.sessionOrgId = org.id;
 
-														const { data, error } = await supabase
-															.from('UserOrganizationRelations')
+												const { data, error } = await supabase
+													.from('UserOrganizationRelations')
+													.select()
+													.eq('org_id', $user.sessionOrgId);
+
+												if (!error) {
+													const org_name = await supabase
+														.from('Organizations')
+														.select()
+														.eq('id', $user.sessionOrgId)
+														.single();
+
+													name = org_name.data.name;
+													getAllOrgTasks();
+
+													for (let i = 0; i < data.length; i++) {
+														const userData = await supabase
+															.from('Users')
 															.select()
-															.eq('org_id', $user.sessionOrgId);
+															.eq('id', data[i].user_id)
+															.single();
 
-														if (!error) {
-															const org_name = await supabase
-																.from('Organizations')
-																.select()
-																.eq('id', $user.sessionOrgId)
-																.single();
+														employees.push({
+															name: userData.data.name,
+															email: userData.data.email,
+															id: userData.data.id,
+															role: userData.data.role
+														});
 
-															name = org_name.data.name;
-															getAllOrgTasks();
-
-															for (let i = 0; i < data.length; i++) {
-																const userData = await supabase
-																	.from('Users')
-																	.select()
-																	.eq('id', data[i].user_id)
-																	.single();
-
-																employees.push({
-																	name: userData.data.name,
-																	email: userData.data.email,
-																	id: userData.data.id,
-																	role: userData.data.role
-																});
-
-																employees = [...employees];
-															}
-														}
-													}}>select</button
-												>
-											</div>
-										</div>
+														employees = [...employees];
+													}
+												}
+											}}
+										>
+											{org['name']}
+										</button>
 									</div>
 								{/each}
 							{/if}
