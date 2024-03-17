@@ -42,10 +42,16 @@
 	/>
 	{#each results as result}
 		<div class="flex flex-row justify-between">
-			<a style="margin-right: 20px" href={result.text.match(/https?:\/\/[^\s\]]+/)[0]}
-				>{result.text.replace(/https?:\/\/[^\s\]]+/, '')}</a
+			<a
+				style="margin-right: 20px"
+				class="text-lg"
+				href={result.text.match(/https?:\/\/[^\s\]]+/)[0]}
+				>{result.text.replace(/\[https?:\/\/[^\s\]]+\]/, '')}</a
 			>
-			<p>{Math.round(result.similarity * 100)}%</p>
+			<p class="text-lg">{Math.round(result.similarity * 100)}%</p>
+
+			<!-- <a style="margin-right: 20px" }>{result.text.replace(/https?:\/\/[^\s\]]+/, '')}</a> -->
+			<!-- <p>{Math.round(result.similarity * 100)}%</p> -->
 		</div>
 	{/each}
 	<div class="grid grid-cols-3 justify-between gap-x-3 mt-3">

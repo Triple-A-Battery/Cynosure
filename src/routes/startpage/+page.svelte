@@ -55,7 +55,6 @@
 	}
 
 	async function save(e) {
-		console.log(e.target.innerText);
 		focusedTask = e.target.innerText;
 		let t = e.target.innerText;
 		let embedding = (await getEmbedding([t]))[0];
@@ -64,10 +63,19 @@
 	}
 
 	async function remove(e) {
+		if (e.target.innerText == (await get('task'))) {
+			chrome.storage.session.remove(['task', 'taskEmbedding']);
+			focusedTask = '';
+		}
+
 		let category = e.target.getAttribute('category');
 		let index = e.target.getAttribute('index');
 		tasks[category].splice(index, 1);
 		chrome.storage.local.set({ tasks });
+
+		for (let [key, value] of Object.entries(tasks)) {
+			tasks[key] = [...value];
+		}
 	}
 </script>
 
@@ -79,7 +87,7 @@
 		<div>
 			{#if focusedTask}
 				<div class="mb-3">
-					<h1 class="text-2xl font-semibold text-center">Focused Task</h1>
+					<h1 class="text-2xl font-semibold text-center">Focus on:</h1>
 					<p class="font-normal leading-loose tracking-tight text-center text-6xl">
 						{focusedTask}
 					</p>
@@ -102,7 +110,7 @@
 								<li
 									class="cursor-pointer"
 									on:click={save}
-									on:dblclick={remove}
+									on:contextmenu|preventDefault={remove}
 									{category}
 									index={i}
 								>
